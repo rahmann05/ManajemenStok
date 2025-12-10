@@ -34,26 +34,21 @@ public class LoginController {
             return;
         }
 
-        // Panggil DAO
         PenggunaDAO dao = new PenggunaDAO();
         Pengguna user = dao.validasiLogin(username, password);
 
         if (user != null) {
-            // LOGIN SUKSES
             System.out.println("Login Berhasil! Role: " + user.getRole());
             pindahKeDashboard();
         } else {
-            // LOGIN GAGAL
             tampilkanAlert(Alert.AlertType.ERROR, "Login Gagal", "Username atau Password salah.");
         }
     }
 
     private void pindahKeDashboard() {
         try {
-            // Ambil Stage (Window) saat ini dari salah satu komponen
             Stage stage = (Stage) usernameField.getScene().getWindow();
 
-            // Load Dashboard
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jejekatering/jstok/view/DashboardView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 900, 600);
 
