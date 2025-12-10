@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           prefHeight="600.0" prefWidth="900.0"
+           stylesheets="@../css/style.css"> <Label text="Selamat Datang di Dashboard J Stok!" textFill="WHITE">
+    <font>
+        <Font name="Segoe UI Bold" size="24.0"/>
+    </font>
+</Label>
+</StackPane>
