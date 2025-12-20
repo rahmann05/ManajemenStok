@@ -70,39 +70,36 @@
 }
 
 /* NAVIGATION */
-.nav-btn {
+.nav-item {
     -fx-background-color: transparent;
-    -fx-text-fill: -secondary-text;
-    -fx-alignment: CENTER_LEFT;
+    -fx-text-fill: -text-secondary;
     -fx-font-weight: 600;
     -fx-font-size: 14px;
-    -fx-padding: 12 20;
-    -fx-background-radius: 12;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12 18;
+    -fx-background-radius: 14;
     -fx-cursor: hand;
+    -fx-graphic-text-gap: 15;
+    -fx-border-width: 0;
 }
+.nav-item:hover {
+    -fx-background-color: rgba(67, 97, 238, 0.1);
+    -fx-text-fill: -accent-1;
+}
+.nav-item .ikonli-font-icon { -fx-icon-color: -text-secondary; -fx-icon-size: 18; }
+.nav-item:hover .ikonli-font-icon { -fx-icon-color: -accent-1; }
 
-.nav-btn .ikonli-font-icon {
-    -fx-icon-color: -secondary-text;
-    -fx-icon-size: 18;
+.btn-danger {
+    -fx-background-color: rgba(247, 37, 133, 0.1);
+    -fx-text-fill: -accent-danger;
+    -fx-background-radius: 14;
+    -fx-font-weight: 700;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
 }
-
-.nav-btn:hover {
-    -fx-background-color: rgba(0, 122, 255, 0.1);
-    -fx-text-fill: -accent-color;
-}
-
-.nav-btn:hover .ikonli-font-icon {
-    -fx-icon-color: -accent-color;
-}
-
-.nav-btn-danger:hover {
-    -fx-background-color: rgba(255, 59, 48, 0.1);
-    -fx-text-fill: -danger-color;
-}
-
-.nav-btn-danger:hover .ikonli-font-icon {
-    -fx-icon-color: -danger-color;
-}
+.btn-danger:hover { -fx-background-color: -accent-danger; -fx-text-fill: white; }
+.btn-danger .ikonli-font-icon { -fx-icon-color: -accent-danger; }
+.btn-danger:hover .ikonli-font-icon { -fx-icon-color: white; }
 
 /* TYPOGRAPHY */
 .title-large {

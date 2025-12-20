@@ -1,5 +1,4 @@
 module com.jejekatering.jstok {
-
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -11,7 +10,6 @@ module com.jejekatering.jstok {
     requires org.apache.poi.ooxml;
 
     requires atlantafx.base;
-    requires com.jfoenix;
     requires org.controlsfx.controls;
     requires AnimateFX;
     requires eu.hansolo.tilesfx;
