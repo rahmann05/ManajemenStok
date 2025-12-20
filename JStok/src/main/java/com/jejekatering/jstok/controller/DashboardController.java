@@ -41,8 +41,20 @@ public class DashboardController {
         System.out.println("Menu Bahan Diklik");
         loadPage("BahanView");
     }
+    @FXML
+    protected void onMenuStokMasukClick() {
+        loadPage("StokMasukView");
+    }
 
-    // Fungsi bantu untuk mengganti halaman tengah
+    @FXML
+    protected void onMenuStokKeluarClick() {
+        loadPage("StokKeluarView");
+    }
+
+    @FXML
+    protected void onMenuLaporanClick() {
+        loadPage("LaporanView");
+    }
     private void loadPage(String pageName) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jejekatering/jstok/view/" + pageName + ".fxml"));
