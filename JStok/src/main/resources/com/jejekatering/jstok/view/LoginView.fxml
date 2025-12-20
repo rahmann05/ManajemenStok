@@ -23,20 +23,20 @@
 
         <VBox alignment="CENTER" spacing="5">
             <Label text="J STOK" styleClass="title-text"/>
-            <Label text="Masuk ke Sistem" styleClass="subtitle-text"/>
+            <Label text="Sistem Manajemen Stok Jeje Katering" styleClass="subtitle-text"/>
         </VBox>
 
         <VBox prefHeight="20" />
 
         <VBox spacing="15">
             <VBox spacing="5">
-                <Label text="Username" styleClass="label" style="-fx-font-weight: bold;"/>
-                <TextField fx:id="usernameField" promptText="Ketikka username..." styleClass="input-field"/>
+                <Label text="Username" textFill="white" style="-fx-font-weight: bold;"/>
+                <TextField fx:id="usernameField" promptText="Masukkan username..." styleClass="input-field"/>
             </VBox>
 
             <VBox spacing="5">
-                <Label text="Password" styleClass="label" style="-fx-font-weight: bold;"/>
-                <PasswordField fx:id="passwordField" promptText="Ketikkan password..." styleClass="input-field"/>
+                <Label text="Password" textFill="white" style="-fx-font-weight: bold;"/>
+                <PasswordField fx:id="passwordField" promptText="Masukkan password..." styleClass="input-field"/>
             </VBox>
         </VBox>
 
@@ -45,7 +45,7 @@
         <Button text="MASUK" onAction="#onLoginButtonClick"
                 styleClass="button-login" prefWidth="320" prefHeight="45"/>
 
-        <Label text="Versi 2025.0.1" style="-fx-text-fill: rgba(255,255,255,0.5); -fx-font-size: 11px;"/>
+        <Label text="Versi 2025.0.1" textFill="rgba(255,255,255,0.4)" style="-fx-font-size: 11px;"/>
 
     </VBox>
 
