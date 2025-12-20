@@ -34,9 +34,12 @@
             <Button text="📦  Data Bahan" onAction="#onMenuBahanClick"
                     styleClass="menu-button" maxWidth="Infinity"/>
 
-            <Button text="📥  Stok Masuk" styleClass="menu-button" maxWidth="Infinity"/>
-            <Button text="📤  Stok Keluar" styleClass="menu-button" maxWidth="Infinity"/>
-            <Button text="📊  Laporan" styleClass="menu-button" maxWidth="Infinity"/>
+            <Button text="📥  Stok Masuk" onAction="#onMenuStokMasukClick"
+                    styleClass="menu-button" maxWidth="Infinity"/>
+            <Button text="📤  Stok Keluar" onAction="#onMenuStokKeluarClick"
+                    styleClass="menu-button" maxWidth="Infinity"/>
+            <Button text="📊  Laporan" onAction="#onMenuLaporanClick"
+                    styleClass="menu-button" maxWidth="Infinity"/>
 
             <VBox VBox.vgrow="ALWAYS"/>
 
