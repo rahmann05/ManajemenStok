@@ -7,13 +7,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.Font?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
+<BorderPane fx:id="mainBorderPane"
+            xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.jejekatering.jstok.controller.DashboardController"
             stylesheets="@../css/style.css"
             prefHeight="700.0" prefWidth="1000.0">
-            fx:id="mainBorderPane"
+
     <left>
         <VBox styleClass="sidebar" prefWidth="220.0" spacing="10.0">
             <padding>
@@ -27,21 +27,27 @@
                 <Label fx:id="roleLabel" text="Role" textFill="#00c6ff" style="-fx-font-size: 12px;"/>
             </VBox>
 
-            <VBox prefHeight="30"/> <Label text="MENU UTAMA" textFill="#aaaaaa" style="-fx-font-size: 10px; -fx-font-weight: bold;"/>
+            <VBox prefHeight="30"/>
 
-            <Button text="📦  Data Bahan" onAction="#onMenuBahanClick" styleClass="menu-button" maxWidth="Infinity"/>
+            <Label text="MENU UTAMA" textFill="#aaaaaa" style="-fx-font-size: 10px; -fx-font-weight: bold;"/>
+
+            <Button text="📦  Data Bahan" onAction="#onMenuBahanClick"
+                    styleClass="menu-button" maxWidth="Infinity"/>
+
             <Button text="📥  Stok Masuk" styleClass="menu-button" maxWidth="Infinity"/>
             <Button text="📤  Stok Keluar" styleClass="menu-button" maxWidth="Infinity"/>
             <Button text="📊  Laporan" styleClass="menu-button" maxWidth="Infinity"/>
 
-            <VBox VBox.vgrow="ALWAYS"/> <Button text="Keluar / Logout" onAction="#onLogoutClick"
-                                                styleClass="button-logout" maxWidth="Infinity"/>
+            <VBox VBox.vgrow="ALWAYS"/>
+
+            <Button text="Keluar / Logout" onAction="#onLogoutClick"
+                    styleClass="button-logout" maxWidth="Infinity"/>
         </VBox>
     </left>
 
     <center>
         <StackPane style="-fx-padding: 20;">
-            <VBox styleClass="glass-card" alignment="CENTER">
+            <VBox styleClass="glass-card" alignment="CENTER" maxWidth="500" maxHeight="300">
                 <Label text="Selamat Datang di J Stok" styleClass="title-text"/>
                 <Label text="Pilih menu di sebelah kiri untuk memulai." styleClass="subtitle-text"/>
             </VBox>
