@@ -1,11 +1,11 @@
 package com.jejekatering.jstok.controller;
 
-import atlantafx.base.theme.PrimerDark;
-import atlantafx.base.theme.PrimerLight;
+import atlantafx.base.theme.CupertinoDark;
+import atlantafx.base.theme.CupertinoLight;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node; // Import Node
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -14,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import org.controlsfx.control.Notifications;
 
 import java.io.IOException;
 
@@ -23,50 +22,51 @@ public class DashboardController {
     @FXML private StackPane rootStack;
     @FXML private BorderPane mainBorderPane;
 
-    // Widgets Dashboard
     @FXML private Label lblTotalStok;
     @FXML private Label lblStokMasuk;
     @FXML private Label lblStokKeluar;
     @FXML private Label lblStokKritis;
     @FXML private BarChart<String, Number> barChart;
 
-    // Variabel untuk menyimpan halaman HOME (Dashboard awal)
     private Node homeView;
     private boolean isDarkMode = false;
 
+    // INITIALIZATION SECTION
     @FXML
     public void initialize() {
-        Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
-
-        // 1. SIMPAN TAMPILAN AWAL (DASHBOARD) KE VARIABEL
-        // Ini penting agar saat pindah halaman, kita bisa kembali ke sini.
+        setTheme(false);
         homeView = mainBorderPane.getCenter();
-
         loadDummyData();
-        showNotification("Sistem Siap", "Dashboard berhasil dimuat.");
     }
 
-    // --- NAVIGASI ---
-
-    // Fungsi untuk kembali ke Dashboard
+    // THEME HANDLING SECTION
     @FXML
-    protected void onMenuDashboardClick() {
-        // Kembalikan area tengah ke homeView yang sudah kita simpan di awal
-        if (homeView != null) {
-            mainBorderPane.setCenter(homeView);
+    protected void onToggleTheme() {
+        isDarkMode = !isDarkMode;
+        setTheme(isDarkMode);
+    }
+
+    private void setTheme(boolean dark) {
+        if (dark) {
+            Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
+            if (rootStack != null) rootStack.getStyleClass().add("dark-mode");
+        } else {
+            Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
+            if (rootStack != null) rootStack.getStyleClass().remove("dark-mode");
         }
     }
 
-    // Fungsi ganti halaman generik
+    // NAVIGATION SECTION
+    @FXML protected void onMenuDashboardClick() {
+        if (homeView != null) mainBorderPane.setCenter(homeView);
+    }
+
     private void loadPage(String fxmlFileName) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jejekatering/jstok/view/" + fxmlFileName + ".fxml"));
             Parent newPage = loader.load();
-            mainBorderPane.setCenter(newPage); // Ganti area tengah dengan halaman baru
-        } catch (IOException e) {
-            e.printStackTrace();
-            showNotification("Error Navigasi", "Gagal memuat halaman: " + fxmlFileName);
-        }
+            mainBorderPane.setCenter(newPage);
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
     @FXML protected void onMenuBahanClick() { loadPage("BahanView"); }
@@ -74,43 +74,18 @@ public class DashboardController {
     @FXML protected void onMenuStokKeluarClick() { loadPage("StokKeluarView"); }
     @FXML protected void onMenuLaporanClick() { loadPage("LaporanView"); }
 
-    // --- DATA & LOGIKA LAIN ---
-
+    // DATA HANDLING SECTION
     private void loadDummyData() {
         if (lblTotalStok != null) {
             lblTotalStok.setText("1,240");
-            lblStokMasuk.setText("35");
-            lblStokKeluar.setText("12");
-            lblStokKritis.setText("5");
-
             XYChart.Series<String, Number> series = new XYChart.Series<>();
-            series.setName("Aktivitas");
             series.getData().add(new XYChart.Data<>("Sen", 10));
-            series.getData().add(new XYChart.Data<>("Sel", 20));
+            series.getData().add(new XYChart.Data<>("Sel", 25));
             series.getData().add(new XYChart.Data<>("Rab", 15));
-            series.getData().add(new XYChart.Data<>("Kam", 45));
-            series.getData().add(new XYChart.Data<>("Jum", 25));
-
+            series.getData().add(new XYChart.Data<>("Kam", 40));
+            series.getData().add(new XYChart.Data<>("Jum", 20));
             barChart.getData().clear();
             barChart.getData().add(series);
-        }
-    }
-
-    private void showNotification(String title, String text) {
-        Notifications.create()
-                .title(title)
-                .text(text)
-                .darkStyle()
-                .showInformation();
-    }
-
-    @FXML
-    protected void onToggleTheme() {
-        isDarkMode = !isDarkMode;
-        if (isDarkMode) {
-            Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
-        } else {
-            Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         }
     }
 
