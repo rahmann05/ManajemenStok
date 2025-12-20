@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.jejekatering.jstok.controller.StokKeluarController"
+      spacing="20" style="-fx-padding: 30;" alignment="TOP_CENTER">
+
+    <VBox alignment="CENTER_LEFT" maxWidth="600">
+        <Label text="Catat Stok Keluar" styleClass="title-text"/>
+        <Label text="Barang yang diambil untuk produksi masak." styleClass="subtitle-text"/>
+    </VBox>
+
+    <VBox styleClass="glass-card" maxWidth="600" spacing="15" style="-fx-padding: 30;">
+
+        <VBox spacing="5">
+            <Label text="Pilih Bahan Baku" styleClass="label"/>
+            <ComboBox promptText="-- Pilih Bahan --" maxWidth="Infinity" styleClass="input-field"/>
+        </VBox>
+
+        <VBox spacing="5">
+            <Label text="Jumlah Keluar (Dipakai)" styleClass="label"/>
+            <TextField promptText="Contoh: 5" styleClass="input-field"/>
+        </VBox>
+
+        <VBox spacing="5">
+            <Label text="Tanggal Pakai" styleClass="label"/>
+            <DatePicker maxWidth="Infinity" styleClass="input-field"/>
+        </VBox>
+
+        <VBox spacing="5">
+            <Label text="Keterangan" styleClass="label"/>
+            <TextField promptText="Untuk pesanan catering Bu Ani..." styleClass="input-field"/>
+        </VBox>
+
+        <VBox prefHeight="10"/>
+
+        <Button text="KURANGI STOK" styleClass="button-login" maxWidth="Infinity" style="-fx-background-color: linear-gradient(to right, #ff416c, #ff4b2b);"/>
+    </VBox>
+
+</VBox>

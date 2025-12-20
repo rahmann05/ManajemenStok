@@ -7,45 +7,52 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.jejekatering.jstok.controller.LoginController"
            stylesheets="@../css/style.css"
-           prefHeight="600.0" prefWidth="800.0">
+           prefHeight="600.0" prefWidth="900.0">
 
-    <VBox styleClass="glass-card"
-          maxWidth="400" maxHeight="450"
-          alignment="CENTER" spacing="20">
+    <Region styleClass="background-layer"/>
+
+    <VBox styleClass="spatial-card"
+          maxWidth="400" maxHeight="480"
+          alignment="CENTER" spacing="25">
 
         <padding>
             <Insets top="40" right="40" bottom="40" left="40"/>
         </padding>
 
-        <VBox alignment="CENTER" spacing="5">
-            <Label text="J STOK" styleClass="title-text"/>
-            <Label text="Masuk ke Sistem" styleClass="subtitle-text"/>
+        <VBox alignment="CENTER" spacing="10">
+            <StackPane style="-fx-background-color: #8B5CF6; -fx-background-radius: 16; -fx-padding: 12; -fx-max-width: 50;">
+                <FontIcon iconLiteral="fth-package" iconSize="32" iconColor="white"/>
+            </StackPane>
+            <Label text="J STOK" styleClass="page-title"/>
+            <Label text="Masuk untuk mengelola inventaris" style="-fx-text-fill: #64748B; -fx-font-size: 14px;"/>
         </VBox>
 
-        <VBox prefHeight="20" />
+        <VBox prefHeight="10" />
 
         <VBox spacing="15">
-            <VBox spacing="5">
-                <Label text="Username" styleClass="label" style="-fx-font-weight: bold;"/>
-                <TextField fx:id="usernameField" promptText="Ketikka username..." styleClass="input-field"/>
+            <VBox spacing="8">
+                <Label text="Username" style="-fx-text-fill: #1E293B; -fx-font-weight: 700;"/>
+                <TextField fx:id="usernameField" promptText="Masukkan username..." styleClass="input-field"/>
             </VBox>
 
-            <VBox spacing="5">
-                <Label text="Password" styleClass="label" style="-fx-font-weight: bold;"/>
-                <PasswordField fx:id="passwordField" promptText="Ketikkan password..." styleClass="input-field"/>
+            <VBox spacing="8">
+                <Label text="Password" style="-fx-text-fill: #1E293B; -fx-font-weight: 700;"/>
+                <PasswordField fx:id="passwordField" promptText="Masukkan password..." styleClass="input-field"/>
             </VBox>
         </VBox>
 
-        <VBox prefHeight="20" />
+        <VBox prefHeight="10" />
 
-        <Button text="MASUK" onAction="#onLoginButtonClick"
-                styleClass="button-login" prefWidth="320" prefHeight="45"/>
+        <Button text="MASUK SEKARANG" onAction="#onLoginButtonClick"
+                styleClass="btn-primary" maxWidth="Infinity" prefHeight="45"/>
 
-        <Label text="Versi 2025.0.1" style="-fx-text-fill: rgba(255,255,255,0.5); -fx-font-size: 11px;"/>
+        <Label text="v2025.0.1 • Jeje Katering" style="-fx-text-fill: #94A3B8; -fx-font-size: 11px; -fx-padding: 10 0 0 0;"/>
 
     </VBox>
 
