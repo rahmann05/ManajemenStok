@@ -71,3 +71,48 @@
     -fx-text-fill: white;
     -fx-font-family: 'Segoe UI';
 }
+
+.sidebar {
+    -fx-background-color: rgba(0, 0, 0, 0.4); /* Lebih gelap dari kartu login */
+    -fx-background-radius: 0 20 20 0; /* Melengkung hanya di kanan */
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-width: 0 1px 0 0; /* Garis batas hanya di kanan */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 5, 0);
+}
+
+.menu-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: rgba(255, 255, 255, 0.8);
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+    -fx-background-radius: 10;
+}
+
+.menu-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: white;
+}
+
+.menu-button-active {
+    -fx-background-color: rgba(0, 198, 255, 0.3); /* Biru transparan */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-color: rgba(0, 198, 255, 0.5);
+    -fx-border-radius: 10;
+}
+
+.button-logout {
+    -fx-background-color: rgba(255, 59, 48, 0.2);
+    -fx-text-fill: #ff6b6b;
+    -fx-background-radius: 10;
+    -fx-border-color: rgba(255, 59, 48, 0.4);
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+}
+
+.button-logout:hover {
+    -fx-background-color: rgba(255, 59, 48, 0.4);
+    -fx-text-fill: white;
+}

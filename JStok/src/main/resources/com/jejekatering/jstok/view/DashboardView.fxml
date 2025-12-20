@@ -1,13 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml"
-           prefHeight="600.0" prefWidth="900.0"
-           stylesheets="@../css/style.css"> <Label text="Selamat Datang di Dashboard J Stok!" textFill="WHITE">
-    <font>
-        <Font name="Segoe UI Bold" size="24.0"/>
-    </font>
-</Label>
-</StackPane>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.jejekatering.jstok.controller.DashboardController"
+            stylesheets="@../css/style.css"
+            prefHeight="700.0" prefWidth="1000.0">
+
+    <left>
+        <VBox styleClass="sidebar" prefWidth="220.0" spacing="10.0">
+            <padding>
+                <Insets top="20" right="15" bottom="20" left="15"/>
+            </padding>
+
+            <VBox spacing="5" alignment="CENTER_LEFT">
+                <Label text="J STOK" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 20px;"/>
+                <Separator opacity="0.3"/>
+                <Label fx:id="welcomeLabel" text="Halo, User" textFill="WHITE" style="-fx-font-size: 14px;"/>
+                <Label fx:id="roleLabel" text="Role" textFill="#00c6ff" style="-fx-font-size: 12px;"/>
+            </VBox>
+
+            <VBox prefHeight="30"/> <Label text="MENU UTAMA" textFill="#aaaaaa" style="-fx-font-size: 10px; -fx-font-weight: bold;"/>
+
+            <Button text="📦  Data Bahan" styleClass="menu-button" maxWidth="Infinity"/>
+            <Button text="📥  Stok Masuk" styleClass="menu-button" maxWidth="Infinity"/>
+            <Button text="📤  Stok Keluar" styleClass="menu-button" maxWidth="Infinity"/>
+            <Button text="📊  Laporan" styleClass="menu-button" maxWidth="Infinity"/>
+
+            <VBox VBox.vgrow="ALWAYS"/> <Button text="Keluar / Logout" onAction="#onLogoutClick"
+                                                styleClass="button-logout" maxWidth="Infinity"/>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane style="-fx-padding: 20;">
+            <VBox styleClass="glass-card" alignment="CENTER">
+                <Label text="Selamat Datang di J Stok" styleClass="title-text"/>
+                <Label text="Pilih menu di sebelah kiri untuk memulai." styleClass="subtitle-text"/>
+            </VBox>
+        </StackPane>
+    </center>
+
+</BorderPane>
