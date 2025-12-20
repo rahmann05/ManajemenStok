@@ -22,14 +22,13 @@ public class LoginController {
     private PasswordField passwordField;
 
     @FXML
-    private Button loginButton; // Opsional jika ingin manipulasi tombol
+    private Button loginButton;
 
     @FXML
     protected void onLoginButtonClick() {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        // Validasi input kosong
         if (username.isEmpty() || password.isEmpty()) {
             tampilkanAlert(Alert.AlertType.WARNING, "Peringatan", "Username dan Password tidak boleh kosong!");
             return;
@@ -52,7 +51,7 @@ public class LoginController {
             Stage stage = (Stage) usernameField.getScene().getWindow();
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jejekatering/jstok/view/DashboardView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 900, 600);
+            Scene scene = new Scene(fxmlLoader.load(), 1280, 800);
 
             stage.setTitle("Dashboard - J Stok");
             stage.setScene(scene);
