@@ -13,7 +13,7 @@
             fx:controller="com.jejekatering.jstok.controller.DashboardController"
             stylesheets="@../css/style.css"
             prefHeight="700.0" prefWidth="1000.0">
-
+            fx:id="mainBorderPane"
     <left>
         <VBox styleClass="sidebar" prefWidth="220.0" spacing="10.0">
             <padding>
@@ -29,7 +29,7 @@
 
             <VBox prefHeight="30"/> <Label text="MENU UTAMA" textFill="#aaaaaa" style="-fx-font-size: 10px; -fx-font-weight: bold;"/>
 
-            <Button text="📦  Data Bahan" styleClass="menu-button" maxWidth="Infinity"/>
+            <Button text="📦  Data Bahan" onAction="#onMenuBahanClick" styleClass="menu-button" maxWidth="Infinity"/>
             <Button text="📥  Stok Masuk" styleClass="menu-button" maxWidth="Infinity"/>
             <Button text="📤  Stok Keluar" styleClass="menu-button" maxWidth="Infinity"/>
             <Button text="📊  Laporan" styleClass="menu-button" maxWidth="Infinity"/>
