@@ -7,6 +7,8 @@ module com.jejekatering.jstok {
     requires org.apache.poi.ooxml;
     requires org.kordamp.ikonli.javafx;
 
+    requires atlantafx.base;
+
     opens com.jejekatering.jstok to javafx.fxml;
     opens com.jejekatering.jstok.controller to javafx.fxml;
 
