@@ -16,7 +16,7 @@ public class MainApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("view/LoginView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1280, 800);
 
-        stage.setTitle("J Stok - Apple Spatial");
+        stage.setTitle("J Stok - Modern Dashboard");
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
