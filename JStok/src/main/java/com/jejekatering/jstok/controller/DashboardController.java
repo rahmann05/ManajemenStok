@@ -3,9 +3,6 @@ package com.jejekatering.jstok.controller;
 import atlantafx.base.theme.CupertinoDark;
 import atlantafx.base.theme.CupertinoLight;
 import eu.hansolo.tilesfx.Tile;
-import eu.hansolo.tilesfx.TileBuilder;
-import eu.hansolo.tilesfx.colors.Bright;
-import eu.hansolo.tilesfx.tools.Helper;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,20 +11,19 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Locale;
 
 public class DashboardController {
 
     @FXML private StackPane rootStack;
     @FXML private BorderPane mainBorderPane;
 
-    // TilesFX Components
     @FXML private Tile tileTotalStok;
     @FXML private Tile tileStokMasuk;
     @FXML private Tile tileStokKeluar;
@@ -41,45 +37,70 @@ public class DashboardController {
     @FXML
     public void initialize() {
         setTheme(false);
-        setupTiles();
+
         homeView = mainBorderPane.getCenter();
         loadDummyData();
     }
 
     private void setupTiles() {
-        // Tile 1: Total Stok (Numeric)
+        // Inisialisasi properti dasar Tile (yang tidak berubah antar tema)
+
         tileTotalStok.setSkinType(Tile.SkinType.NUMBER);
         tileTotalStok.setTitle("Total Stok");
-        tileTotalStok.setValue(1240);
         tileTotalStok.setUnit("Unit");
-        tileTotalStok.setDescription("Total Aset Fisik");
-        tileTotalStok.setTextVisible(true);
-        tileTotalStok.setBackgroundColor(Color.web("#4361EE")); // Warna Utama
+        tileTotalStok.setValue(1240);
+        tileTotalStok.setDescription("Aset Aktif");
+        tileTotalStok.setBackgroundColor(Color.web("#8B5CF6")); // Aksen Ungu
+        tileTotalStok.setTitleColor(Color.WHITE);
+        tileTotalStok.setValueColor(Color.WHITE);
+        tileTotalStok.setUnitColor(Color.WHITE);
+        tileTotalStok.setDescriptionColor(Color.WHITE);
         tileTotalStok.setRoundedCorners(true);
 
-        // Tile 2: Stok Masuk (Sparkline / Graph)
         tileStokMasuk.setSkinType(Tile.SkinType.SPARK_LINE);
         tileStokMasuk.setTitle("Stok Masuk");
         tileStokMasuk.setUnit("Item");
-        tileStokMasuk.setBarColor(Color.web("#4CC9F0"));
-        tileStokMasuk.setBackgroundColor(Color.web("#ffffff80")); // Semi transparan glass
         tileStokMasuk.setValue(254);
+        tileStokMasuk.setBarColor(Color.web("#10B981"));
+        tileStokMasuk.setStrokeWithGradient(true);
+        tileStokMasuk.setRoundedCorners(true);
 
-        // Tile 3: Stok Keluar (Sparkline / Graph)
         tileStokKeluar.setSkinType(Tile.SkinType.SPARK_LINE);
         tileStokKeluar.setTitle("Stok Keluar");
         tileStokKeluar.setUnit("Item");
-        tileStokKeluar.setBarColor(Color.web("#F72585"));
-        tileStokKeluar.setBackgroundColor(Color.web("#ffffff80"));
         tileStokKeluar.setValue(85);
+        tileStokKeluar.setBarColor(Color.web("#EF4444"));
+        tileStokKeluar.setStrokeWithGradient(true);
+        tileStokKeluar.setRoundedCorners(true);
 
-        // Tile 4: Stok Kritis (Gauge / Percentage)
         tileKritis.setSkinType(Tile.SkinType.GAUGE);
-        tileKritis.setTitle("Kapasitas Gudang");
+        tileKritis.setTitle("Kapasitas");
         tileKritis.setUnit("%");
+        tileKritis.setValue(75);
         tileKritis.setThreshold(80);
-        tileKritis.setValue(65);
-        tileKritis.setBackgroundColor(Color.web("#ffffff80"));
+        tileKritis.setBarColor(Color.web("#8B5CF6"));
+        tileKritis.setRoundedCorners(true);
+    }
+
+    private void updateTileColors(boolean dark) {
+        Color bgColor = dark ? Color.web("#1E293B") : Color.WHITE;
+        Color textColor = dark ? Color.web("#F1F5F9") : Color.web("#1E293B");
+
+        tileStokMasuk.setBackgroundColor(bgColor);
+        tileStokMasuk.setTitleColor(textColor);
+        tileStokMasuk.setValueColor(textColor);
+        tileStokMasuk.setUnitColor(textColor);
+
+        tileStokKeluar.setBackgroundColor(bgColor);
+        tileStokKeluar.setTitleColor(textColor);
+        tileStokKeluar.setValueColor(textColor);
+        tileStokKeluar.setUnitColor(textColor);
+
+        tileKritis.setBackgroundColor(bgColor);
+        tileKritis.setTitleColor(textColor);
+        tileKritis.setValueColor(textColor);
+        tileKritis.setUnitColor(textColor);
+        tileKritis.setNeedleColor(textColor);
     }
 
     @FXML
@@ -92,20 +113,15 @@ public class DashboardController {
         if (dark) {
             Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
             if (rootStack != null) rootStack.getStyleClass().add("dark-mode");
-
-            // Adjust Tiles for Dark Mode
-            tileStokMasuk.setBackgroundColor(Color.web("#1e293b80"));
-            tileStokKeluar.setBackgroundColor(Color.web("#1e293b80"));
-            tileKritis.setBackgroundColor(Color.web("#1e293b80"));
         } else {
             Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
             if (rootStack != null) rootStack.getStyleClass().remove("dark-mode");
-
-            // Adjust Tiles for Light Mode
-            tileStokMasuk.setBackgroundColor(Color.web("#ffffff80"));
-            tileStokKeluar.setBackgroundColor(Color.web("#ffffff80"));
-            tileKritis.setBackgroundColor(Color.web("#ffffff80"));
         }
+
+        if (tileTotalStok.getSkinType() == null) {
+            setupTiles();
+        }
+        updateTileColors(dark);
     }
 
     @FXML protected void onMenuDashboardClick() {

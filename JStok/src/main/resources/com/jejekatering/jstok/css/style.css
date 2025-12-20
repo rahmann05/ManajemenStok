@@ -1,161 +1,155 @@
-/* ROOT VARIABLES */
 .root {
-    -glass-bg: rgba(255, 255, 255, 0.65);
-    -glass-border: rgba(255, 255, 255, 0.4);
-    -glass-highlight: rgba(255, 255, 255, 0.8);
-    -primary-text: #1d1d1f;
-    -secondary-text: #86868b;
-    -accent-color: #007AFF;
-    -danger-color: #FF3B30;
-    -success-color: #34C759;
-    -card-shadow: rgba(0, 0, 0, 0.1);
+    -color-bg: #F8FAFC;
+    -color-surface: #FFFFFF;
+    -color-text-primary: #1E293B;
+    -color-text-secondary: #64748B;
+    -color-accent: #8B5CF6;
+    -color-accent-hover: #7C3AED;
+    -color-accent-soft: rgba(139, 92, 246, 0.1);
+    -color-danger: #EF4444;
+    -color-border: #E2E8F0;
+
+    -effect-card: dropshadow(three-pass-box, rgba(148, 163, 184, 0.1), 20, 0, 0, 8);
+
     -fx-font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 
 .root.dark-mode {
-    -glass-bg: rgba(30, 30, 30, 0.60);
-    -glass-border: rgba(255, 255, 255, 0.1);
-    -glass-highlight: rgba(255, 255, 255, 0.15);
-    -primary-text: #f5f5f7;
-    -secondary-text: #a1a1a6;
-    -card-shadow: rgba(0, 0, 0, 0.4);
+    -color-bg: #0F172A;
+    -color-surface: #1E293B;
+    -color-text-primary: #F1F5F9;
+    -color-text-secondary: #94A3B8;
+    -color-border: #334155;
 }
 
-/* BACKGROUND LAYER */
 .background-layer {
-    -fx-background-color: linear-gradient(to bottom right, #f5f5f7 0%, #d1e8ff 100%);
+    -fx-background-color: -color-bg;
 }
 
-.root.dark-mode .background-layer {
-    -fx-background-color: linear-gradient(to bottom right, #1c1c1e 0%, #000000 100%);
-}
-
-/* GLASS COMPONENTS */
-.glass-panel {
-    -fx-background-color: -glass-bg;
-    -fx-background-radius: 24;
-    -fx-border-color: linear-gradient(to bottom right, -glass-border, transparent);
-    -fx-border-radius: 24;
-    -fx-border-width: 1.5px;
-    -fx-effect: dropshadow(three-pass-box, -card-shadow, 30, 0, 0, 10);
-}
-
-.glass-card {
-    -fx-background-color: -glass-bg;
+.spatial-card {
+    -fx-background-color: -color-surface;
     -fx-background-radius: 20;
-    -fx-border-color: linear-gradient(to bottom right, -glass-highlight, transparent);
+    -fx-border-color: -color-border;
     -fx-border-radius: 20;
-    -fx-border-width: 1px;
-    -fx-effect: dropshadow(three-pass-box, -card-shadow, 15, 0, 0, 5);
+    -fx-border-width: 1;
+    -fx-effect: -effect-card;
+    -fx-padding: 24;
 }
 
-.glass-card:hover {
-    -fx-effect: dropshadow(three-pass-box, -accent-color, 15, 0.2, 0, 5);
-    -fx-translate-y: -2;
+.sidebar-container {
+    -fx-background-color: -color-surface;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 5, 0);
+    -fx-padding: 30 20;
 }
 
-/* ACCENT CARDS */
-.card-primary {
-    -fx-background-color: linear-gradient(to bottom right, -accent-color, derive(-accent-color, -20%));
-    -fx-background-radius: 20;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 122, 255, 0.4), 20, 0, 0, 8);
+/* --- NAVIGATION BUTTONS --- */
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -color-text-secondary;
+    -fx-alignment: CENTER_LEFT;
+    -fx-font-weight: 600;
+    -fx-font-size: 14px;
+    -fx-padding: 12 16;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-graphic-text-gap: 15;
 }
 
-.card-primary .label {
+.nav-button:hover {
+    -fx-background-color: -color-bg;
+    -fx-text-fill: -color-text-primary;
+}
+
+.nav-button .ikonli-font-icon {
+    -fx-icon-color: -color-text-secondary;
+    -fx-icon-size: 20;
+}
+
+.nav-button:hover .ikonli-font-icon {
+    -fx-icon-color: -color-text-primary;
+}
+
+.nav-button-active {
+    -fx-background-color: -color-accent-soft;
+    -fx-text-fill: -color-accent;
+}
+
+.nav-button-active .ikonli-font-icon {
+    -fx-icon-color: -color-accent;
+}
+
+/* --- ACTION BUTTONS --- */
+.btn-primary {
+    -fx-background-color: -color-accent;
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-font-size: 14px;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(139, 92, 246, 0.4), 10, 0, 0, 4);
+}
+
+.btn-primary:hover {
+    -fx-background-color: -color-accent-hover;
+}
+
+.btn-danger {
+    -fx-background-color: rgba(239, 68, 68, 0.1);
+    -fx-text-fill: -color-danger;
+    -fx-background-radius: 12;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12 16;
+}
+
+.btn-danger:hover {
+    -fx-background-color: -color-danger;
     -fx-text-fill: white;
 }
 
-.card-primary .ikonli-font-icon {
+.btn-danger .ikonli-font-icon {
+    -fx-icon-color: -color-danger;
+    -fx-icon-size: 20;
+}
+
+.btn-danger:hover .ikonli-font-icon {
     -fx-icon-color: white;
 }
 
-/* NAVIGATION */
-.nav-item {
-    -fx-background-color: transparent;
-    -fx-text-fill: -text-secondary;
-    -fx-font-weight: 600;
-    -fx-font-size: 14px;
-    -fx-alignment: CENTER_LEFT;
-    -fx-padding: 12 18;
-    -fx-background-radius: 14;
-    -fx-cursor: hand;
-    -fx-graphic-text-gap: 15;
-    -fx-border-width: 0;
-}
-.nav-item:hover {
-    -fx-background-color: rgba(67, 97, 238, 0.1);
-    -fx-text-fill: -accent-1;
-}
-.nav-item .ikonli-font-icon { -fx-icon-color: -text-secondary; -fx-icon-size: 18; }
-.nav-item:hover .ikonli-font-icon { -fx-icon-color: -accent-1; }
-
-.btn-danger {
-    -fx-background-color: rgba(247, 37, 133, 0.1);
-    -fx-text-fill: -accent-danger;
-    -fx-background-radius: 14;
-    -fx-font-weight: 700;
-    -fx-cursor: hand;
-    -fx-border-width: 0;
-}
-.btn-danger:hover { -fx-background-color: -accent-danger; -fx-text-fill: white; }
-.btn-danger .ikonli-font-icon { -fx-icon-color: -accent-danger; }
-.btn-danger:hover .ikonli-font-icon { -fx-icon-color: white; }
-
-/* TYPOGRAPHY */
-.title-large {
-    -fx-font-size: 28px;
+/* --- TYPOGRAPHY & INPUTS --- */
+.page-title {
+    -fx-font-size: 24px;
     -fx-font-weight: 800;
-    -fx-text-fill: -primary-text;
+    -fx-text-fill: -color-text-primary;
 }
 
-.title-medium {
-    -fx-font-size: 18px;
+.section-title {
+    -fx-font-size: 16px;
     -fx-font-weight: 700;
-    -fx-text-fill: -primary-text;
+    -fx-text-fill: -color-text-primary;
 }
 
-.subtitle {
-    -fx-font-size: 13px;
-    -fx-text-fill: -secondary-text;
+.search-input, .input-field {
+    -fx-background-color: -color-surface;
+    -fx-border-color: -color-border;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 12 15;
+    -fx-text-fill: -color-text-primary;
+    -fx-prompt-text-fill: -color-text-secondary;
 }
 
-.card-value {
-    -fx-font-size: 32px;
-    -fx-font-weight: 800;
-    -fx-text-fill: -primary-text;
+.search-input:focused, .input-field:focused {
+    -fx-border-color: -color-accent;
+    -fx-effect: dropshadow(three-pass-box, -color-accent-soft, 10, 0, 0, 0);
 }
 
-.card-label {
-    -fx-font-size: 12px;
-    -fx-font-weight: 700;
-    -fx-text-transform: uppercase;
-    -fx-text-fill: -secondary-text;
-}
-
-/* INPUTS */
-.glass-input {
-    -fx-background-color: -glass-bg;
-    -fx-background-radius: 50;
-    -fx-border-color: -glass-border;
+.search-input {
     -fx-border-radius: 50;
-    -fx-padding: 8 20;
-    -fx-text-fill: -primary-text;
+    -fx-background-radius: 50;
 }
 
-.glass-input:focused {
-    -fx-border-color: -accent-color;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 122, 255, 0.3), 10, 0, 0, 0);
-}
-
-/* CHART */
-.chart-plot-background {
-    -fx-background-color: transparent;
-}
-
-.axis-label {
-    -fx-text-fill: -secondary-text;
-}
-
-.axis {
-    -fx-tick-label-fill: -secondary-text;
-}
+.chart-plot-background { -fx-background-color: transparent; }
+.axis-label { -fx-text-fill: -color-text-secondary; }
+.axis { -fx-tick-label-fill: -color-text-secondary; }

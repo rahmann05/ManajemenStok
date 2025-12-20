@@ -6,32 +6,40 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.jejekatering.jstok.controller.LaporanController"
-      spacing="20" style="-fx-padding: 20;">
+      spacing="20" style="-fx-padding: 10;">
 
-    <HBox alignment="CENTER_LEFT" spacing="20">
-        <VBox>
-            <Label text="Laporan Transaksi" styleClass="title-text"/>
-            <Label text="Riwayat stok masuk dan keluar." styleClass="subtitle-text"/>
-        </VBox>
-        <HBox HBox.hgrow="ALWAYS"/>
-        <Button text="Export Excel" styleClass="button-login"/>
-    </HBox>
+    <VBox styleClass="spatial-card" VBox.vgrow="ALWAYS" spacing="20">
 
-    <TableView fx:id="laporanTable" VBox.vgrow="ALWAYS">
-        <columns>
-            <TableColumn text="Tanggal" prefWidth="150"/>
-            <TableColumn text="Jenis" prefWidth="100"/>
-            <TableColumn text="Nama Bahan" prefWidth="200"/>
-            <TableColumn text="Jumlah" prefWidth="100"/>
-            <TableColumn text="Oleh User" prefWidth="150"/>
-            <TableColumn text="Keterangan" prefWidth="250"/>
-        </columns>
-        <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
-        </columnResizePolicy>
-    </TableView>
+        <HBox alignment="CENTER_LEFT" spacing="15">
+            <VBox>
+                <Label text="Laporan Transaksi" styleClass="section-title" style="-fx-font-size: 20px;"/>
+                <Label text="Riwayat pergerakan stok masuk dan keluar." style="-fx-text-fill: #64748B; -fx-font-size: 12px;"/>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Export Excel" styleClass="btn-primary">
+                <graphic> <FontIcon iconLiteral="fth-download" iconColor="white"/> </graphic>
+            </Button>
+        </HBox>
+
+        <TableView fx:id="laporanTable" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-border-color: #E2E8F0; -fx-border-radius: 8;">
+            <columns>
+                <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="150"/>
+                <TableColumn fx:id="colJenis" text="Jenis" prefWidth="100"/>
+                <TableColumn fx:id="colNama" text="Nama Bahan" prefWidth="200"/>
+                <TableColumn fx:id="colJumlah" text="Jumlah" prefWidth="100"/>
+                <TableColumn fx:id="colUser" text="Oleh User" prefWidth="150"/>
+                <TableColumn fx:id="colKeterangan" text="Keterangan" prefWidth="250"/>
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+        </TableView>
+
+    </VBox>
 
 </VBox>
