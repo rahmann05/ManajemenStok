@@ -1,60 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="mainBorderPane"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.jejekatering.jstok.controller.DashboardController"
-            stylesheets="@../css/style.css"
-            prefHeight="700.0" prefWidth="1000.0">
+<StackPane fx:id="rootStack" styleClass="root"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.jejekatering.jstok.controller.DashboardController"
+           prefHeight="800.0" prefWidth="1280.0">
 
-    <left>
-        <VBox styleClass="sidebar" prefWidth="220.0" spacing="10.0">
-            <padding>
-                <Insets top="20" right="15" bottom="20" left="15"/>
-            </padding>
+    <Region styleClass="background-layer"/>
 
-            <VBox spacing="5" alignment="CENTER_LEFT">
-                <Label text="J STOK" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 20px;"/>
-                <Separator opacity="0.3"/>
-                <Label fx:id="welcomeLabel" text="Halo, User" textFill="WHITE" style="-fx-font-size: 14px;"/>
-                <Label fx:id="roleLabel" text="Role" textFill="#00c6ff" style="-fx-font-size: 12px;"/>
-            </VBox>
+    <HBox styleClass="floating-container" spacing="20">
 
-            <VBox prefHeight="30"/>
+        <VBox styleClass="spatial-card" prefWidth="260" spacing="10" style="-fx-padding: 20;">
+            <Label text="J Stok" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 0 0 20 10;"/>
 
-            <Label text="MENU UTAMA" textFill="#aaaaaa" style="-fx-font-size: 10px; -fx-font-weight: bold;"/>
+            <JFXButton text="Dashboard"
+                       onAction="#onMenuDashboardClick"  styleClass="sidebar-btn"
+                       maxWidth="Infinity">
+                <graphic> <FontIcon iconLiteral="fth-grid"/> </graphic>
+            </JFXButton>
 
-            <Button text="📦  Data Bahan" onAction="#onMenuBahanClick"
-                    styleClass="menu-button" maxWidth="Infinity"/>
+            <Label text="MANAGEMENT" style="-fx-text-fill: #9CA3AF; -fx-font-size: 11px; -fx-font-weight: bold; -fx-padding: 10 0 0 20;"/>
 
-            <Button text="📥  Stok Masuk" onAction="#onMenuStokMasukClick"
-                    styleClass="menu-button" maxWidth="Infinity"/>
-            <Button text="📤  Stok Keluar" onAction="#onMenuStokKeluarClick"
-                    styleClass="menu-button" maxWidth="Infinity"/>
-            <Button text="📊  Laporan" onAction="#onMenuLaporanClick"
-                    styleClass="menu-button" maxWidth="Infinity"/>
+            <JFXButton text="Data Bahan" onAction="#onMenuBahanClick" styleClass="sidebar-btn" maxWidth="Infinity">
+                <graphic> <FontIcon iconLiteral="fth-layers"/> </graphic>
+            </JFXButton>
+            <JFXButton text="Stok Masuk" onAction="#onMenuStokMasukClick" styleClass="sidebar-btn" maxWidth="Infinity">
+                <graphic> <FontIcon iconLiteral="fth-download"/> </graphic>
+            </JFXButton>
+            <JFXButton text="Stok Keluar" onAction="#onMenuStokKeluarClick" styleClass="sidebar-btn" maxWidth="Infinity">
+                <graphic> <FontIcon iconLiteral="fth-upload"/> </graphic>
+            </JFXButton>
 
-            <VBox VBox.vgrow="ALWAYS"/>
+            <Region VBox.vgrow="ALWAYS"/>
 
-            <Button text="Keluar / Logout" onAction="#onLogoutClick"
-                    styleClass="button-logout" maxWidth="Infinity"/>
+            <JFXButton text="Logout" onAction="#onLogoutClick" styleClass="btn-black" maxWidth="Infinity" style="-fx-padding: 10;">
+                <graphic> <FontIcon iconLiteral="fth-log-out" style="-fx-icon-color: white;"/> </graphic>
+            </JFXButton>
         </VBox>
-    </left>
 
-    <center>
-        <StackPane style="-fx-padding: 20;">
-            <VBox styleClass="glass-card" alignment="CENTER" maxWidth="500" maxHeight="300">
-                <Label text="Selamat Datang di J Stok" styleClass="title-text"/>
-                <Label text="Pilih menu di sebelah kiri untuk memulai." styleClass="subtitle-text"/>
-            </VBox>
-        </StackPane>
-    </center>
+        <BorderPane HBox.hgrow="ALWAYS" fx:id="mainBorderPane">
+            <top>
+                <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 0 0 20 0;">
+                    <VBox>
+                        <Label text="Overview" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+                        <Label text="Selamat datang kembali, Admin." style="-fx-text-fill: #6B7280;"/>
+                    </VBox>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <TextField promptText="Search..." style="-fx-background-radius: 20; -fx-min-width: 250;"/>
+                    <JFXButton text="Switch Mode" onAction="#onToggleTheme" style="-fx-background-color: white; -fx-background-radius: 20; -fx-cursor:hand;"/>
+                </HBox>
+            </top>
 
-</BorderPane>
+            <center>
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+                    <VBox spacing="20" style="-fx-padding: 0 10 0 0;">
+
+                        <GridPane hgap="20" vgap="20">
+                            <columnConstraints>
+                                <ColumnConstraints percentWidth="25"/>
+                                <ColumnConstraints percentWidth="25"/>
+                                <ColumnConstraints percentWidth="25"/>
+                                <ColumnConstraints percentWidth="25"/>
+                            </columnConstraints>
+
+                            <VBox styleClass="spatial-card" spacing="5" style="-fx-padding: 20;" GridPane.columnIndex="0">
+                                <Label text="TOTAL STOK" styleClass="card-title"/>
+                                <Label fx:id="lblTotalStok" text="1,240" styleClass="card-value"/>
+                                <Label text="Item aktif" styleClass="card-unit"/>
+                            </VBox>
+
+                            <VBox styleClass="spatial-card" spacing="5" style="-fx-padding: 20;" GridPane.columnIndex="1">
+                                <Label text="STOK MASUK" styleClass="card-title"/>
+                                <Label fx:id="lblStokMasuk" text="240" styleClass="card-value"/>
+                                <Label text="Bulan ini" styleClass="card-unit"/>
+                            </VBox>
+
+                            <VBox styleClass="spatial-card" spacing="5" style="-fx-padding: 20;" GridPane.columnIndex="2">
+                                <Label text="STOK KELUAR" styleClass="card-title"/>
+                                <Label fx:id="lblStokKeluar" text="180" styleClass="card-value"/>
+                                <Label text="Bulan ini" styleClass="card-unit"/>
+                            </VBox>
+
+                            <VBox styleClass="card-black" spacing="5" style="-fx-padding: 20;" GridPane.columnIndex="3">
+                                <Label text="STOK KRITIS" styleClass="card-title"/>
+                                <Label fx:id="lblStokKritis" text="5" styleClass="card-value"/>
+                                <Label text="Perlu Restock" styleClass="card-unit"/>
+                            </VBox>
+                        </GridPane>
+
+                        <VBox styleClass="spatial-card" VBox.vgrow="ALWAYS" minHeight="350" style="-fx-padding: 20;">
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Label text="Statistik Pergerakan" styleClass="card-title" style="-fx-font-size: 16px;"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                            </HBox>
+                            <BarChart fx:id="barChart">
+                                <xAxis>
+                                    <CategoryAxis label="Hari" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                    <NumberAxis label="Jumlah" side="LEFT" />
+                                </yAxis>
+                            </BarChart>
+                        </VBox>
+
+                    </VBox>
+                </ScrollPane>
+            </center>
+        </BorderPane>
+
+    </HBox>
+</StackPane>
