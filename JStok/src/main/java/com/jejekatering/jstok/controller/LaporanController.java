@@ -1,11 +1,13 @@
 package com.jejekatering.jstok.controller;
 
+import animatefx.animation.FadeInUp;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.util.Duration;
 
 public class LaporanController {
 
@@ -27,6 +29,13 @@ public class LaporanController {
         colKeterangan.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().keterangan));
 
         laporanTable.setItems(getDummyData());
+        playEntryAnimations();
+    }
+
+    private void playEntryAnimations() {
+        if (laporanTable != null) {
+            new FadeInUp(laporanTable).setDelay(Duration.millis(100)).play();
+        }
     }
 
     private ObservableList<LaporanItem> getDummyData() {

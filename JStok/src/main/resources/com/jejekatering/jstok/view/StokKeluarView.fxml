@@ -1,46 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.jejekatering.jstok.controller.StokKeluarController"
-      spacing="20" style="-fx-padding: 30;" alignment="TOP_CENTER">
+      fitToWidth="true" fitToHeight="true"
+      hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+      styleClass="page-container" stylesheets="@../css/style.css"
+      style="-fx-background-color: transparent; -fx-background: transparent;">
 
-    <VBox alignment="CENTER_LEFT" maxWidth="600">
-        <Label text="Catat Stok Keluar" styleClass="title-text"/>
-        <Label text="Barang yang diambil untuk produksi masak." styleClass="subtitle-text"/>
+    <VBox spacing="24">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <VBox spacing="4">
+                <Label text="Stok Keluar" styleClass="page-title"/>
+                <Label text="Catat pemakaian bahan untuk produksi" styleClass="text-secondary"/>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS"/>
+        </HBox>
+
+        <HBox spacing="24" alignment="TOP_CENTER">
+            <VBox styleClass="spatial-card" spacing="20" HBox.hgrow="ALWAYS" maxWidth="550">
+                <Label text="Form Pengurangan Stok" styleClass="section-title"/>
+
+                <VBox spacing="8">
+                    <Label text="Pilih Bahan Baku" styleClass="form-label"/>
+                    <ComboBox fx:id="comboBahan" promptText="-- Pilih Bahan --" maxWidth="Infinity" styleClass="form-input"/>
+                </VBox>
+
+                <VBox spacing="8">
+                    <Label text="Jumlah Keluar (Dipakai)" styleClass="form-label"/>
+                    <TextField fx:id="txtJumlah" promptText="Contoh: 5" styleClass="form-input"/>
+                </VBox>
+
+            <VBox spacing="8">
+                <Label text="Tanggal Pakai" styleClass="form-label"/>
+                <DatePicker fx:id="datePicker" maxWidth="Infinity" prefHeight="40"/>
+                </VBox>
+
+                <VBox spacing="8">
+                    <Label text="Keterangan" styleClass="form-label"/>
+                    <TextField fx:id="txtKeterangan" promptText="Untuk pesanan catering Bu Ani..." styleClass="form-input"/>
+                </VBox>
+
+                <Region prefHeight="10"/>
+
+                <Button text="Kurangi Stok" styleClass="button-danger" maxWidth="Infinity" prefHeight="48">
+                    <graphic>
+                        <FontIcon iconLiteral="fth-minus-circle" iconColor="white" iconSize="16"/>
+                    </graphic>
+                </Button>
+            </VBox>
+
+            <VBox styleClass="spatial-card" spacing="16" minWidth="280" maxWidth="350">
+                <Label text="Ringkasan Hari Ini" styleClass="section-title"/>
+
+                <VBox styleClass="stat-card-danger" spacing="4">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <FontIcon iconLiteral="fth-trending-down" iconColor="#EF4444" iconSize="20"/>
+                        <Label text="Total Stok Keluar" styleClass="stat-label"/>
+                    </HBox>
+                    <Label text="12 Item" styleClass="stat-value"/>
+                </VBox>
+
+                <VBox styleClass="stat-card-info" spacing="4">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <FontIcon iconLiteral="fth-package" iconColor="#8B5CF6" iconSize="20"/>
+                        <Label text="Jenis Bahan" styleClass="stat-label"/>
+                    </HBox>
+                    <Label text="5 Jenis" styleClass="stat-value"/>
+                </VBox>
+
+                <VBox styleClass="stat-card-warning" spacing="4">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <FontIcon iconLiteral="fth-alert-triangle" iconColor="#F59E0B" iconSize="20"/>
+                        <Label text="Stok Hampir Habis" styleClass="stat-label"/>
+                    </HBox>
+                    <Label text="3 Item" styleClass="stat-value"/>
+                </VBox>
+            </VBox>
+        </HBox>
     </VBox>
+</ScrollPane>
 
-    <VBox styleClass="glass-card" maxWidth="600" spacing="15" style="-fx-padding: 30;">
-
-        <VBox spacing="5">
-            <Label text="Pilih Bahan Baku" styleClass="label"/>
-            <ComboBox promptText="-- Pilih Bahan --" maxWidth="Infinity" styleClass="input-field"/>
-        </VBox>
-
-        <VBox spacing="5">
-            <Label text="Jumlah Keluar (Dipakai)" styleClass="label"/>
-            <TextField promptText="Contoh: 5" styleClass="input-field"/>
-        </VBox>
-
-        <VBox spacing="5">
-            <Label text="Tanggal Pakai" styleClass="label"/>
-            <DatePicker maxWidth="Infinity" styleClass="input-field"/>
-        </VBox>
-
-        <VBox spacing="5">
-            <Label text="Keterangan" styleClass="label"/>
-            <TextField promptText="Untuk pesanan catering Bu Ani..." styleClass="input-field"/>
-        </VBox>
-
-        <VBox prefHeight="10"/>
-
-        <Button text="KURANGI STOK" styleClass="button-login" maxWidth="Infinity" style="-fx-background-color: linear-gradient(to right, #ff416c, #ff4b2b);"/>
-    </VBox>
-
-</VBox>
