@@ -7,6 +7,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.collections.FXCollections;
 
 public class BahanController {
 
@@ -19,7 +20,7 @@ public class BahanController {
 
     @FXML private TextField txtSearch;
     @FXML private TextField txtNama;
-    @FXML private TextField txtSatuan;
+    @FXML private ComboBox<String> comboSatuan;
     @FXML private TextField txtStok;
     @FXML private TextField txtMinStok;
 
@@ -35,6 +36,7 @@ public class BahanController {
     public void initialize() {
         bahanDAO = new BahanDAO();
         setupTable();
+        setupSatuanOptions();
         loadData();
         setupFormSelection();
         setupSearch();
@@ -46,6 +48,12 @@ public class BahanController {
         colSatuan.setCellValueFactory(new PropertyValueFactory<>("satuan"));
         colStok.setCellValueFactory(new PropertyValueFactory<>("stokSaatIni"));
         colMinStok.setCellValueFactory(new PropertyValueFactory<>("stokMinimum"));
+    }
+
+    private void setupSatuanOptions() {
+        comboSatuan.setItems(FXCollections.observableArrayList(
+                "Kg", "Gram", "Liter", "Ml", "Pcs", "Pack", "Dus", "Sachet", "Box"
+        ));
     }
 
     private void loadData() {
@@ -71,7 +79,7 @@ public class BahanController {
             if (newSelection != null) {
                 selectedBahan = newSelection;
                 txtNama.setText(newSelection.getNamaBahan());
-                txtSatuan.setText(newSelection.getSatuan());
+                comboSatuan.setValue(newSelection.getSatuan());
                 txtStok.setText(String.valueOf(newSelection.getStokSaatIni()));
                 txtMinStok.setText(String.valueOf(newSelection.getStokMinimum()));
 
@@ -84,15 +92,15 @@ public class BahanController {
     @FXML
     protected void onSimpanClick() {
         String nama = txtNama.getText();
-        String satuan = txtSatuan.getText();
+        String satuan = comboSatuan.getValue();
 
-        if (nama.isEmpty() || satuan.isEmpty()) {
+        if (nama.isEmpty() || satuan == null || satuan.isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "Validasi", "Nama dan Satuan tidak boleh kosong.");
             return;
         }
 
-        int stok = 0;
-        int min = 0;
+        int stok;
+        int min;
         try {
             stok = Integer.parseInt(txtStok.getText());
             min = Integer.parseInt(txtMinStok.getText());
@@ -138,7 +146,7 @@ public class BahanController {
     protected void onResetClick() {
         selectedBahan = null;
         txtNama.clear();
-        txtSatuan.clear();
+        comboSatuan.setValue(null);
         txtStok.clear();
         txtMinStok.clear();
         btnSimpan.setText("Simpan Data");
