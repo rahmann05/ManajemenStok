@@ -32,28 +32,28 @@
 
             <VBox alignment="CENTER" spacing="10">
                 <StackPane styleClass="login-image-card">
-                    <ImageView fitWidth="400" fitHeight="100" preserveRatio="false">
+                    <ImageView fitWidth="380" fitHeight="90" preserveRatio="false">
                         <Image url="@../images/CateringLog.jpg"/>
                         <clip>
-                            <Rectangle width="400" height="100" arcWidth="16" arcHeight="16"/>
+                            <Rectangle width="380" height="90" arcWidth="14" arcHeight="14"/>
                         </clip>
                     </ImageView>
                 </StackPane>
 
                 <StackPane styleClass="login-image-card">
-                    <ImageView fitWidth="400" fitHeight="100" preserveRatio="false">
+                    <ImageView fitWidth="380" fitHeight="90" preserveRatio="false">
                         <Image url="@../images/Gudang.jpg"/>
                         <clip>
-                            <Rectangle width="400" height="100" arcWidth="16" arcHeight="16"/>
+                            <Rectangle width="380" height="90" arcWidth="14" arcHeight="14"/>
                         </clip>
                     </ImageView>
                 </StackPane>
 
                 <StackPane styleClass="login-image-card">
-                    <ImageView fitWidth="400" fitHeight="100" preserveRatio="false">
+                    <ImageView fitWidth="380" fitHeight="90" preserveRatio="false">
                         <Image url="@../images/Catering.jpeg"/>
                         <clip>
-                            <Rectangle width="400" height="100" arcWidth="16" arcHeight="16"/>
+                            <Rectangle width="380" height="90" arcWidth="14" arcHeight="14"/>
                         </clip>
                     </ImageView>
                 </StackPane>
@@ -92,8 +92,6 @@
                 <Button maxWidth="Infinity" onAction="#onLoginButtonClick" prefHeight="48" styleClass="login-submit-btn" text="Masuk"/>
 
                 <Region prefHeight="20"/>
-
-                <Label styleClass="login-form-hint" text="Lupa password? Hubungi admin"/>
             </VBox>
         </VBox>
     </HBox>

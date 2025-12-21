@@ -77,7 +77,7 @@
             </top>
 
             <center>
-                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" vbarPolicy="NEVER">
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" vbarPolicy="AS_NEEDED" hbarPolicy="NEVER">
                     <VBox spacing="30">
                         <GridPane hgap="25" vgap="25">
                             <columnConstraints>
