@@ -5,55 +5,98 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.Region?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.shape.Rectangle?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml"
-           fx:controller="com.jejekatering.jstok.controller.LoginController"
-           stylesheets="@../css/style.css"
-           prefHeight="600.0" prefWidth="900.0">
+<StackPane prefHeight="720.0" prefWidth="1280.0" styleClass="login-root" stylesheets="@../css/style.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="com.jejekatering.jstok.controller.LoginController">
 
-    <Region styleClass="background-layer"/>
+    <HBox alignment="CENTER">
+        <VBox alignment="CENTER" prefWidth="560" spacing="0" styleClass="login-hero-panel">
+            <padding>
+                <Insets bottom="40" left="40" right="40" top="40"/>
+            </padding>
 
-    <VBox styleClass="spatial-card"
-          maxWidth="400" maxHeight="480"
-          alignment="CENTER" spacing="25">
+            <Region VBox.vgrow="ALWAYS"/>
 
-        <padding>
-            <Insets top="40" right="40" bottom="40" left="40"/>
-        </padding>
-
-        <VBox alignment="CENTER" spacing="10">
-            <StackPane style="-fx-background-color: #8B5CF6; -fx-background-radius: 16; -fx-padding: 12; -fx-max-width: 50;">
-                <FontIcon iconLiteral="fth-package" iconSize="32" iconColor="white"/>
-            </StackPane>
-            <Label text="J STOK" styleClass="page-title"/>
-            <Label text="Masuk untuk mengelola inventaris" style="-fx-text-fill: #64748B; -fx-font-size: 14px;"/>
-        </VBox>
-
-        <VBox prefHeight="10" />
-
-        <VBox spacing="15">
-            <VBox spacing="8">
-                <Label text="Username" style="-fx-text-fill: #1E293B; -fx-font-weight: 700;"/>
-                <TextField fx:id="usernameField" promptText="Masukkan username..." styleClass="input-field"/>
+            <VBox alignment="CENTER" spacing="6">
+                <Label styleClass="login-hero-title" text="J STOK"/>
+                <Label styleClass="login-hero-subtitle" text="Jeje Katering Stok Manajemen"/>
             </VBox>
 
-            <VBox spacing="8">
-                <Label text="Password" style="-fx-text-fill: #1E293B; -fx-font-weight: 700;"/>
-                <PasswordField fx:id="passwordField" promptText="Masukkan password..." styleClass="input-field"/>
+            <Region prefHeight="32"/>
+
+            <VBox alignment="CENTER" spacing="10">
+                <StackPane styleClass="login-image-card">
+                    <ImageView fitWidth="400" fitHeight="100" preserveRatio="false">
+                        <Image url="@../images/CateringLog.jpg"/>
+                        <clip>
+                            <Rectangle width="400" height="100" arcWidth="16" arcHeight="16"/>
+                        </clip>
+                    </ImageView>
+                </StackPane>
+
+                <StackPane styleClass="login-image-card">
+                    <ImageView fitWidth="400" fitHeight="100" preserveRatio="false">
+                        <Image url="@../images/Gudang.jpg"/>
+                        <clip>
+                            <Rectangle width="400" height="100" arcWidth="16" arcHeight="16"/>
+                        </clip>
+                    </ImageView>
+                </StackPane>
+
+                <StackPane styleClass="login-image-card">
+                    <ImageView fitWidth="400" fitHeight="100" preserveRatio="false">
+                        <Image url="@../images/Catering.jpeg"/>
+                        <clip>
+                            <Rectangle width="400" height="100" arcWidth="16" arcHeight="16"/>
+                        </clip>
+                    </ImageView>
+                </StackPane>
             </VBox>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <Label styleClass="login-hero-copyright" text="© 2025 Jeje Katering. All rights reserved."/>
         </VBox>
 
-        <VBox prefHeight="10" />
+        <VBox alignment="CENTER" styleClass="login-form-section" HBox.hgrow="ALWAYS">
+            <VBox alignment="CENTER" maxWidth="380" styleClass="login-form-card">
+                <padding>
+                    <Insets bottom="40" left="40" right="40" top="40"/>
+                </padding>
 
-        <Button text="MASUK SEKARANG" onAction="#onLoginButtonClick"
-                styleClass="btn-primary" maxWidth="Infinity" prefHeight="45"/>
+                <Label styleClass="login-form-title" text="Masuk"/>
+                <Label styleClass="login-form-subtitle" text="Silakan masuk untuk melanjutkan"/>
 
-        <Label text="v2025.0.1 • Jeje Katering" style="-fx-text-fill: #94A3B8; -fx-font-size: 11px; -fx-padding: 10 0 0 0;"/>
+                <Region prefHeight="32"/>
 
-    </VBox>
+                <VBox alignment="CENTER" spacing="20">
+                    <VBox alignment="CENTER_LEFT" spacing="6">
+                        <Label styleClass="login-field-label" text="Username"/>
+                        <TextField fx:id="usernameField" promptText="Masukkan username" styleClass="login-field"/>
+                    </VBox>
+
+                    <VBox alignment="CENTER_LEFT" spacing="6">
+                        <Label styleClass="login-field-label" text="Password"/>
+                        <PasswordField fx:id="passwordField" promptText="Masukkan password" styleClass="login-field"/>
+                    </VBox>
+                </VBox>
+
+                <Region prefHeight="28"/>
+
+                <Button maxWidth="Infinity" onAction="#onLoginButtonClick" prefHeight="48" styleClass="login-submit-btn" text="Masuk"/>
+
+                <Region prefHeight="20"/>
+
+                <Label styleClass="login-form-hint" text="Lupa password? Hubungi admin"/>
+            </VBox>
+        </VBox>
+    </HBox>
 
 </StackPane>
+
