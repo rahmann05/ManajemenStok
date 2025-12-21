@@ -1,32 +1,14 @@
 package com.jejekatering.jstok.controller;
 
-import animatefx.animation.FadeInUp;
-import atlantafx.base.theme.CupertinoDark;
-import atlantafx.base.theme.CupertinoLight;
 import com.jejekatering.jstok.dao.BahanDAO;
 import com.jejekatering.jstok.model.Bahan;
-import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-
-import java.io.IOException;
 
 public class BahanController {
-
-    @FXML private StackPane rootStack;
-    @FXML private BorderPane mainBorderPane;
-
-    @FXML private Button btnDashboard, btnBahan, btnStokMasuk, btnStokKeluar, btnLaporan;
 
     @FXML private TableView<Bahan> tableBahan;
     @FXML private TableColumn<Bahan, Integer> colId;
@@ -52,10 +34,6 @@ public class BahanController {
     @FXML
     public void initialize() {
         bahanDAO = new BahanDAO();
-
-        updateThemeState();
-        setActiveButton(btnBahan);
-
         setupTable();
         loadData();
         setupFormSelection();
@@ -174,69 +152,5 @@ public class BahanController {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
-    }
-
-    private void setActiveButton(Button activeButton) {
-        resetButtonStyle(btnDashboard);
-        resetButtonStyle(btnBahan);
-        resetButtonStyle(btnStokMasuk);
-        resetButtonStyle(btnStokKeluar);
-        resetButtonStyle(btnLaporan);
-
-        activeButton.getStyleClass().add("nav-button-active");
-    }
-
-    private void resetButtonStyle(Button btn) {
-        if (btn != null) {
-            btn.getStyleClass().remove("nav-button-active");
-            if (!btn.getStyleClass().contains("nav-button")) {
-                btn.getStyleClass().add("nav-button");
-            }
-        }
-    }
-
-    @FXML
-    protected void onToggleTheme() {
-        boolean isCurrentDark = rootStack.getStyleClass().contains("dark-mode");
-        if (isCurrentDark) {
-            Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
-            rootStack.getStyleClass().remove("dark-mode");
-        } else {
-            Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
-            rootStack.getStyleClass().add("dark-mode");
-        }
-    }
-
-    private void updateThemeState() {
-        // Default theme check, sesuaikan jika Anda menyimpan state tema di Session/Config
-        Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
-    }
-
-    private void loadPage(String fxmlFileName) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jejekatering/jstok/view/" + fxmlFileName + ".fxml"));
-            Parent newPage = loader.load();
-            Scene scene = rootStack.getScene();
-            scene.setRoot(newPage);
-
-            new FadeInUp(newPage).setDelay(Duration.millis(100)).play();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML protected void onMenuDashboardClick() { loadPage("DashboardView"); }
-    @FXML protected void onMenuBahanClick() { loadPage("BahanView"); }
-    @FXML protected void onMenuStokMasukClick() { loadPage("StokMasukView"); }
-    @FXML protected void onMenuStokKeluarClick() { loadPage("StokKeluarView"); }
-    @FXML protected void onMenuLaporanClick() { loadPage("LaporanView"); }
-
-    @FXML
-    protected void onLogoutClick() {
-        try {
-            Stage stage = (Stage) rootStack.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/com/jejekatering/jstok/view/LoginView.fxml"));
-            stage.setScene(new Scene(root));
-        } catch (IOException e) { e.printStackTrace(); }
     }
 }

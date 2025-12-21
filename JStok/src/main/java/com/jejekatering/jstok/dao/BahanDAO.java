@@ -1,7 +1,7 @@
 package com.jejekatering.jstok.dao;
 
+import com.jejekatering.jstok.config.KonekDB;
 import com.jejekatering.jstok.model.Bahan;
-import com.jejekatering.jstok.util.DatabaseConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -16,7 +16,7 @@ public class BahanDAO {
         ObservableList<Bahan> listBahan = FXCollections.observableArrayList();
         String query = "SELECT * FROM bahan ORDER BY nama_bahan ASC";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = KonekDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -37,7 +37,7 @@ public class BahanDAO {
 
     public boolean tambahBahan(Bahan bahan) {
         String query = "INSERT INTO bahan (nama_bahan, satuan, stok_saat_ini, stok_minimum) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = KonekDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, bahan.getNamaBahan());
@@ -54,7 +54,7 @@ public class BahanDAO {
 
     public boolean updateBahan(Bahan bahan) {
         String query = "UPDATE bahan SET nama_bahan = ?, satuan = ?, stok_saat_ini = ?, stok_minimum = ? WHERE id_bahan = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = KonekDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, bahan.getNamaBahan());
@@ -72,7 +72,7 @@ public class BahanDAO {
 
     public boolean hapusBahan(int idBahan) {
         String query = "DELETE FROM bahan WHERE id_bahan = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = KonekDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, idBahan);

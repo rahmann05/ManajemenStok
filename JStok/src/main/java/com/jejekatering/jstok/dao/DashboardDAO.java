@@ -1,6 +1,6 @@
 package com.jejekatering.jstok.dao;
 
-import com.jejekatering.jstok.util.DatabaseConnection;
+import com.jejekatering.jstok.config.KonekDB;
 import javafx.scene.chart.XYChart;
 
 import java.sql.Connection;
@@ -12,7 +12,7 @@ public class DashboardDAO {
 
     public int getTotalStok() {
         String query = "SELECT SUM(stok_saat_ini) as total FROM bahan";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = KonekDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -27,7 +27,7 @@ public class DashboardDAO {
 
     public int getStokMasukBulanIni() {
         String query = "SELECT SUM(jumlah) as total FROM transaksi_stok WHERE jenis_transaksi = 'Masuk' AND MONTH(tanggal) = MONTH(CURRENT_DATE()) AND YEAR(tanggal) = YEAR(CURRENT_DATE())";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = KonekDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -42,7 +42,7 @@ public class DashboardDAO {
 
     public int getStokKeluarBulanIni() {
         String query = "SELECT SUM(jumlah) as total FROM transaksi_stok WHERE jenis_transaksi = 'Keluar' AND MONTH(tanggal) = MONTH(CURRENT_DATE()) AND YEAR(tanggal) = YEAR(CURRENT_DATE())";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = KonekDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -57,7 +57,7 @@ public class DashboardDAO {
 
     public int getItemKritisCount() {
         String query = "SELECT COUNT(*) as total FROM bahan WHERE stok_saat_ini <= stok_minimum";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = KonekDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -80,7 +80,7 @@ public class DashboardDAO {
                 "GROUP BY DATE(tanggal) " +
                 "ORDER BY tanggal ASC";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = KonekDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
 
