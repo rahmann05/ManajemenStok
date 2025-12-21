@@ -14,6 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -28,6 +30,7 @@ public class DashboardController {
 
     @FXML private StackPane rootStack;
     @FXML private BorderPane mainBorderPane;
+    @FXML private ScrollPane dashboardContent;
 
     @FXML private StackPane card1, card2, card3, card4;
     @FXML private VBox chartSection, activitySection;
@@ -41,6 +44,7 @@ public class DashboardController {
     @FXML private Button btnStokKeluar;
     @FXML private Button btnLaporan;
     @FXML private FontIcon themeToggleIcon;
+    @FXML private Label themeLabel;
 
     private Node homeView;
     private boolean isDarkMode = false;
@@ -48,7 +52,7 @@ public class DashboardController {
     @FXML
     public void initialize() {
         setTheme(false);
-        homeView = mainBorderPane.getCenter();
+        homeView = dashboardContent;
 
         setupTiles();
         loadDummyData();
@@ -170,8 +174,10 @@ public class DashboardController {
     private void updateToggleIconColor(boolean dark) {
         if (themeToggleIcon != null) {
             themeToggleIcon.setIconLiteral(dark ? "fth-sun" : "fth-moon");
-            // Use theme-appropriate colors: light gray for dark mode, dark gray for light mode
             themeToggleIcon.setIconColor(Color.web(dark ? "#F5F5F7" : "#1D1D1F"));
+        }
+        if (themeLabel != null) {
+            themeLabel.setText(dark ? "Light Mode" : "Dark Mode");
         }
     }
 
