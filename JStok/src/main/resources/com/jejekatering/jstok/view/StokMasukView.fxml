@@ -1,98 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <ScrollPane xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.jejekatering.jstok.controller.StokMasukController"
-      fitToWidth="true" fitToHeight="true"
-      hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
-      styleClass="page-container" stylesheets="@../css/style.css"
-      style="-fx-background-color: transparent; -fx-background: transparent;">
+            fx:controller="com.jejekatering.jstok.controller.StokMasukController"
+            fitToWidth="true" fitToHeight="true"
+            styleClass="content-scroll" stylesheets="@../css/style.css"
+            hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
 
-    <VBox spacing="24">
-        <padding>
-            <Insets top="10" right="10" bottom="10" left="10"/>
-        </padding>
+    <VBox spacing="24" style="-fx-padding: 8 8 24 8;">
+        <VBox spacing="4">
+            <Label text="Stok Masuk" styleClass="page-title"/>
+            <Label text="Catat barang masuk dari supplier atau belanja" styleClass="text-secondary"/>
+        </VBox>
 
-        <HBox alignment="CENTER_LEFT" spacing="20">
-            <VBox spacing="4">
-                <Label text="Stok Masuk" styleClass="page-title"/>
-                <Label text="Catat barang masuk dari supplier atau belanja" styleClass="text-secondary"/>
-            </VBox>
-            <Region HBox.hgrow="ALWAYS"/>
-        </HBox>
+        <GridPane hgap="20" VBox.vgrow="ALWAYS">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="60" hgrow="ALWAYS"/>
+                <ColumnConstraints prefWidth="320" minWidth="280"/>
+            </columnConstraints>
 
-        <HBox spacing="24" alignment="TOP_CENTER">
-            <VBox styleClass="spatial-card" spacing="20" HBox.hgrow="ALWAYS" maxWidth="550">
-                <Label text="Form Input Stok Masuk" styleClass="section-title"/>
-
-                <VBox spacing="8">
-                    <Label text="Pilih Bahan Baku" styleClass="form-label"/>
-                    <ComboBox fx:id="comboBahan" promptText="-- Pilih Bahan --" maxWidth="Infinity" styleClass="form-input"/>
+            <VBox styleClass="spatial-card" GridPane.columnIndex="0" spacing="20">
+                <VBox spacing="4">
+                    <Label text="Form Input Stok Masuk" styleClass="section-title"/>
+                    <Label text="Isi form untuk mencatat barang masuk" styleClass="text-secondary" style="-fx-font-size: 12px;"/>
                 </VBox>
 
-                <VBox spacing="8">
-                    <Label text="Jumlah Masuk" styleClass="form-label"/>
-                    <TextField fx:id="txtJumlah" promptText="Contoh: 10" styleClass="form-input"/>
+                <VBox spacing="6">
+                    <Label text="Pilih Bahan" styleClass="form-label"/>
+                    <ComboBox fx:id="comboBahan" promptText="Pilih bahan baku" maxWidth="Infinity" styleClass="form-combo"/>
                 </VBox>
 
-            <VBox spacing="8">
-                <Label text="Tanggal Terima" styleClass="form-label"/>
-                <DatePicker fx:id="datePicker" maxWidth="Infinity" prefHeight="40"/>
-                </VBox>
+                <GridPane hgap="16" vgap="6">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="50"/>
+                        <ColumnConstraints percentWidth="50"/>
+                    </columnConstraints>
+                    <VBox spacing="6" GridPane.columnIndex="0">
+                        <Label text="Jumlah Masuk" styleClass="form-label"/>
+                        <TextField fx:id="txtJumlah" promptText="0" styleClass="form-input"/>
+                    </VBox>
+                    <VBox spacing="6" GridPane.columnIndex="1">
+                        <Label text="Tanggal Terima" styleClass="form-label"/>
+                        <DatePicker fx:id="datePicker" maxWidth="Infinity" styleClass="form-date"/>
+                    </VBox>
+                </GridPane>
 
-                <VBox spacing="8">
+                <VBox spacing="6">
                     <Label text="Keterangan (Opsional)" styleClass="form-label"/>
-                    <TextField fx:id="txtKeterangan" promptText="Asal supplier, dll..." styleClass="form-input"/>
+                    <TextField fx:id="txtKeterangan" promptText="Asal supplier, catatan tambahan..." styleClass="form-input"/>
                 </VBox>
 
-                <Region prefHeight="10"/>
+                <Region VBox.vgrow="ALWAYS" minHeight="20"/>
 
                 <Button text="Simpan Stok Masuk" styleClass="button-primary" maxWidth="Infinity" prefHeight="48">
                     <graphic>
-                        <FontIcon iconLiteral="fth-save" iconColor="white" iconSize="16"/>
+                        <FontIcon iconLiteral="fth-plus-circle" iconColor="white" iconSize="16"/>
                     </graphic>
                 </Button>
             </VBox>
 
-            <VBox styleClass="spatial-card" spacing="16" minWidth="280" maxWidth="350">
-                <Label text="Ringkasan Hari Ini" styleClass="section-title"/>
+            <VBox spacing="16" GridPane.columnIndex="1">
+                <VBox styleClass="spatial-card" spacing="16">
+                    <Label text="Ringkasan Hari Ini" styleClass="section-title"/>
 
-                <VBox styleClass="stat-card-success" spacing="4">
-                    <HBox alignment="CENTER_LEFT" spacing="10">
-                        <FontIcon iconLiteral="fth-trending-up" iconColor="#22C55E" iconSize="20"/>
-                        <Label text="Total Stok Masuk" styleClass="stat-label"/>
-                    </HBox>
-                    <Label text="25 Item" styleClass="stat-value"/>
-                </VBox>
+                    <VBox styleClass="stat-card-success" spacing="6">
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <FontIcon iconLiteral="fth-trending-up" iconColor="#22C55E" iconSize="18"/>
+                            <Label text="Total Stok Masuk" styleClass="stat-label"/>
+                        </HBox>
+                        <Label text="25 Item" styleClass="stat-value"/>
+                    </VBox>
 
-                <VBox styleClass="stat-card-info" spacing="4">
-                    <HBox alignment="CENTER_LEFT" spacing="10">
-                        <FontIcon iconLiteral="fth-package" iconColor="#8B5CF6" iconSize="20"/>
-                        <Label text="Jenis Bahan" styleClass="stat-label"/>
-                    </HBox>
-                    <Label text="8 Jenis" styleClass="stat-value"/>
-                </VBox>
+                    <VBox styleClass="stat-card-info" spacing="6">
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <FontIcon iconLiteral="fth-package" iconColor="#8B5CF6" iconSize="18"/>
+                            <Label text="Jenis Bahan" styleClass="stat-label"/>
+                        </HBox>
+                        <Label text="8 Jenis" styleClass="stat-value"/>
+                    </VBox>
 
-                <VBox styleClass="stat-card-warning" spacing="4">
-                    <HBox alignment="CENTER_LEFT" spacing="10">
-                        <FontIcon iconLiteral="fth-clock" iconColor="#F59E0B" iconSize="20"/>
-                        <Label text="Transaksi Terakhir" styleClass="stat-label"/>
-                    </HBox>
-                    <Label text="10:30 WIB" styleClass="stat-value"/>
+                    <VBox styleClass="stat-card-warning" spacing="6">
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <FontIcon iconLiteral="fth-clock" iconColor="#F59E0B" iconSize="18"/>
+                            <Label text="Transaksi Terakhir" styleClass="stat-label"/>
+                        </HBox>
+                        <Label text="10:30 WIB" styleClass="stat-value"/>
+                    </VBox>
                 </VBox>
             </VBox>
-        </HBox>
+        </GridPane>
     </VBox>
 </ScrollPane>
 
