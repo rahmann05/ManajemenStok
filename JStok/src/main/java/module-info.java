@@ -19,5 +19,6 @@ module com.jejekatering.jstok {
 
     opens com.jejekatering.jstok to javafx.fxml;
     opens com.jejekatering.jstok.controller to javafx.fxml;
+    opens com.jejekatering.jstok.model to javafx.base, javafx.fxml;
     exports com.jejekatering.jstok;
 }
