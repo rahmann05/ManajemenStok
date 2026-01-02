@@ -7,6 +7,13 @@ public class Bahan {
     private int stokSaatIni;
     private int stokMinimum;
 
+    // Enum untuk status stok sesuai SRS & SDD
+    public enum StatusStok {
+        NORMAL,  // Hijau - stok > minimum
+        RENDAH,  // Kuning - stok <= minimum && stok > 0
+        HABIS    // Merah - stok = 0
+    }
+
     public Bahan(int idBahan, String namaBahan, String satuan, int stokSaatIni, int stokMinimum) {
         this.idBahan = idBahan;
         this.namaBahan = namaBahan;
@@ -29,4 +36,42 @@ public class Bahan {
 
     public int getStokMinimum() { return stokMinimum; }
     public void setStokMinimum(int stokMinimum) { this.stokMinimum = stokMinimum; }
+
+    /**
+     * Menentukan status stok berdasarkan logika:
+     * - HABIS (Merah): stok = 0
+     * - RENDAH (Kuning): stok <= minimum && stok > 0
+     * - NORMAL (Hijau): stok > minimum
+     */
+    public StatusStok getStatusStok() {
+        if (stokSaatIni == 0) {
+            return StatusStok.HABIS;
+        } else if (stokSaatIni <= stokMinimum) {
+            return StatusStok.RENDAH;
+        } else {
+            return StatusStok.NORMAL;
+        }
+    }
+
+    /**
+     * Mendapatkan warna hex berdasarkan status stok
+     */
+    public String getStatusColor() {
+        return switch (getStatusStok()) {
+            case HABIS -> "#FF3B30";  // Merah
+            case RENDAH -> "#FF9500"; // Kuning/Oranye
+            case NORMAL -> "#34C759"; // Hijau
+        };
+    }
+
+    /**
+     * Mendapatkan label status dalam bahasa Indonesia
+     */
+    public String getStatusLabel() {
+        return switch (getStatusStok()) {
+            case HABIS -> "Habis";
+            case RENDAH -> "Rendah";
+            case NORMAL -> "Normal";
+        };
+    }
 }

@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -14,7 +16,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<?import eu.hansolo.tilesfx.Tile?>
 
 <StackPane fx:id="rootStack" styleClass="root"
            xmlns:fx="http://javafx.com/fxml"
@@ -23,6 +24,7 @@
            prefHeight="850.0" prefWidth="1300.0">
 
     <HBox spacing="24" style="-fx-padding: 24;">
+
         <VBox styleClass="sidebar-card" prefWidth="260" spacing="8">
             <HBox alignment="CENTER_LEFT" spacing="12" style="-fx-padding: 8 12 24 12;">
                 <StackPane styleClass="brand-icon-container">
@@ -70,12 +72,42 @@
             <center>
                 <ScrollPane fx:id="dashboardContent" fitToWidth="true" fitToHeight="true" styleClass="content-scroll" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
                     <VBox spacing="24" style="-fx-padding: 8 8 24 8;">
-                        <HBox alignment="CENTER_LEFT">
+
+                        <HBox alignment="CENTER_LEFT" spacing="20">
                             <VBox spacing="4">
                                 <Label text="Dashboard" styleClass="page-title"/>
-                                <Label text="Overview performa inventaris Anda" styleClass="text-secondary"/>
+                                <Label text="Kesehatan stok &amp; performa inventaris Anda" styleClass="text-secondary"/>
                             </VBox>
+                            <Region HBox.hgrow="ALWAYS"/>
+
+                            <Button text="Cek Stok Minimum" styleClass="button-secondary" onAction="#onCekStokMinimumClick">
+                                <graphic><FontIcon iconLiteral="fth-alert-circle" iconSize="14"/></graphic>
+                            </Button>
                         </HBox>
+
+
+                        <HBox fx:id="statusIndicatorSection" spacing="16" alignment="CENTER_LEFT" styleClass="status-indicator-bar">
+                            <Label text="Status Stok:" styleClass="status-bar-label"/>
+
+                            <HBox spacing="8" alignment="CENTER_LEFT" styleClass="status-badge,status-badge-normal">
+                                <StackPane styleClass="status-dot-normal"/>
+                                <Label fx:id="lblStokNormal" text="0" styleClass="status-count-normal"/>
+                                <Label text="Normal" styleClass="status-label"/>
+                            </HBox>
+
+                            <HBox spacing="8" alignment="CENTER_LEFT" styleClass="status-badge,status-badge-warning">
+                                <StackPane styleClass="status-dot-warning"/>
+                                <Label fx:id="lblStokRendah" text="0" styleClass="status-count-warning"/>
+                                <Label text="Rendah" styleClass="status-label"/>
+                            </HBox>
+
+                            <HBox spacing="8" alignment="CENTER_LEFT" styleClass="status-badge,status-badge-danger">
+                                <StackPane styleClass="status-dot-danger"/>
+                                <Label fx:id="lblStokHabis" text="0" styleClass="status-count-danger"/>
+                                <Label text="Habis" styleClass="status-label"/>
+                            </HBox>
+                        </HBox>
+
 
                         <GridPane hgap="20" vgap="20">
                             <columnConstraints>
@@ -84,67 +116,109 @@
                                 <ColumnConstraints percentWidth="25"/>
                                 <ColumnConstraints percentWidth="25"/>
                             </columnConstraints>
-                            <StackPane fx:id="card1" styleClass="tile-container" GridPane.columnIndex="0">
-                                <Tile fx:id="tileTotalStok"/>
-                            </StackPane>
-                            <StackPane fx:id="card2" styleClass="tile-container" GridPane.columnIndex="1">
-                                <Tile fx:id="tileStokMasuk"/>
-                            </StackPane>
-                            <StackPane fx:id="card3" styleClass="tile-container" GridPane.columnIndex="2">
-                                <Tile fx:id="tileStokKeluar"/>
-                            </StackPane>
-                            <StackPane fx:id="card4" styleClass="tile-container" GridPane.columnIndex="3">
-                                <Tile fx:id="tileKritis"/>
-                            </StackPane>
+
+                            <VBox fx:id="card1" styleClass="metric-card-colored,metric-card-red" GridPane.columnIndex="0" spacing="8">
+                                <HBox alignment="CENTER_LEFT" spacing="12">
+                                    <StackPane styleClass="metric-icon-white">
+                                        <FontIcon iconLiteral="fth-alert-triangle" iconSize="20" iconColor="white"/>
+                                    </StackPane>
+                                    <Label text="Stok Kritis" styleClass="metric-title-light"/>
+                                </HBox>
+                                <Label fx:id="lblStokKritisValue" text="0" styleClass="metric-value-light"/>
+                                <Label fx:id="lblStokKritisDesc" text="Item perlu restock" styleClass="metric-desc-light"/>
+                            </VBox>
+
+                            <VBox fx:id="card2" styleClass="metric-card-colored,metric-card-slate" GridPane.columnIndex="1" spacing="8">
+                                <HBox alignment="CENTER_LEFT" spacing="12">
+                                    <StackPane styleClass="metric-icon-white">
+                                        <FontIcon iconLiteral="fth-archive" iconSize="20" iconColor="white"/>
+                                    </StackPane>
+                                    <Label text="Stok Mati" styleClass="metric-title-light"/>
+                                </HBox>
+                                <Label fx:id="lblDeadStockValue" text="0" styleClass="metric-value-light"/>
+                                <Label fx:id="lblDeadStockDesc" text="Tidak ada keluar 90 hari" styleClass="metric-desc-light"/>
+                            </VBox>
+
+
+                            <VBox fx:id="card3" styleClass="metric-card-colored,metric-card-purple" GridPane.columnIndex="2" spacing="8">
+                                <HBox alignment="CENTER_LEFT" spacing="12">
+                                    <StackPane styleClass="metric-icon-white">
+                                        <FontIcon iconLiteral="fth-activity" iconSize="20" iconColor="white"/>
+                                    </StackPane>
+                                    <Label text="Intensitas Hari Ini" styleClass="metric-title-light"/>
+                                </HBox>
+                                <Label fx:id="lblTransaksiHariIniValue" text="0" styleClass="metric-value-light"/>
+                                <Label fx:id="lblTransaksiHariIniDesc" text="Transaksi hari ini" styleClass="metric-desc-light"/>
+                            </VBox>
+
+
+                            <VBox fx:id="card4" styleClass="metric-card-colored,metric-card-green" GridPane.columnIndex="3" spacing="8">
+                                <HBox alignment="CENTER_LEFT" spacing="12">
+                                    <StackPane styleClass="metric-icon-white">
+                                        <FontIcon iconLiteral="fth-box" iconSize="20" iconColor="white"/>
+                                    </StackPane>
+                                    <Label text="Total SKU Aktif" styleClass="metric-title-light"/>
+                                </HBox>
+                                <Label fx:id="lblTotalSKUValue" text="0" styleClass="metric-value-light"/>
+                                <Label fx:id="lblTotalSKUDesc" text="Jenis barang terdaftar" styleClass="metric-desc-light"/>
+                            </VBox>
                         </GridPane>
 
-                        <GridPane hgap="20" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="chartSection" styleClass="spatial-card" spacing="16">
+                            <HBox alignment="CENTER_LEFT" spacing="12">
+                                <Label text="Tren Pergerakan (7 Hari Terakhir)" styleClass="section-title"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <HBox spacing="16" alignment="CENTER_RIGHT">
+                                    <HBox spacing="6" alignment="CENTER_LEFT">
+                                        <StackPane styleClass="legend-dot-masuk"/>
+                                        <Label text="Masuk" styleClass="legend-label"/>
+                                    </HBox>
+                                    <HBox spacing="6" alignment="CENTER_LEFT">
+                                        <StackPane styleClass="legend-dot-keluar"/>
+                                        <Label text="Keluar" styleClass="legend-label"/>
+                                    </HBox>
+                                </HBox>
+                            </HBox>
+                            <BarChart fx:id="barChart" legendVisible="false" verticalGridLinesVisible="false" minHeight="280">
+                                <xAxis><CategoryAxis label="Tanggal"/></xAxis>
+                                <yAxis><NumberAxis label="Jumlah Transaksi (Kali)"/></yAxis>
+                            </BarChart>
+                        </VBox>
+
+                        <GridPane hgap="20" vgap="20">
                             <columnConstraints>
                                 <ColumnConstraints percentWidth="65"/>
                                 <ColumnConstraints percentWidth="35"/>
                             </columnConstraints>
 
-                            <VBox fx:id="chartSection" styleClass="spatial-card" GridPane.columnIndex="0" spacing="16">
-                                <Label text="Analitik Stok" styleClass="section-title"/>
-                                <BarChart fx:id="barChart" legendVisible="false" verticalGridLinesVisible="false" VBox.vgrow="ALWAYS" minHeight="380">
-                                    <xAxis><CategoryAxis/></xAxis>
-                                    <yAxis><NumberAxis/></yAxis>
-                                </BarChart>
+                            <VBox fx:id="restockSection" styleClass="spatial-card" GridPane.columnIndex="0" spacing="16">
+                                <HBox alignment="CENTER_LEFT" spacing="12">
+                                    <FontIcon iconLiteral="fth-alert-circle" iconSize="18" iconColor="#FF9500"/>
+                                    <Label text="Segera Restock" styleClass="section-title"/>
+                                    <Region HBox.hgrow="ALWAYS"/>
+                                    <Button text="+ Input Masuk" styleClass="button-primary-small" onAction="#onInputMasukClick"/>
+                                </HBox>
+                                <TableView fx:id="tblRestock" styleClass="modern-table" VBox.vgrow="ALWAYS" minHeight="200">
+                                    <columns>
+                                        <TableColumn fx:id="colNamaBahan" text="Nama Bahan" prefWidth="160"/>
+                                        <TableColumn fx:id="colSisaStok" text="Sisa Stok" prefWidth="80"/>
+                                        <TableColumn fx:id="colMinStok" text="Min. Stok" prefWidth="80"/>
+                                        <TableColumn fx:id="colSatuan" text="Satuan" prefWidth="70"/>
+                                        <TableColumn fx:id="colStatus" text="Status" prefWidth="90"/>
+                                    </columns>
+                                    <placeholder>
+                                        <Label text="Semua stok dalam kondisi aman" styleClass="text-secondary"/>
+                                    </placeholder>
+                                </TableView>
                             </VBox>
 
-                            <VBox fx:id="activitySection" styleClass="spatial-card" GridPane.columnIndex="1" spacing="16">
-                                <Label text="Aktivitas Terbaru" styleClass="section-title"/>
-                                <VBox spacing="12" VBox.vgrow="ALWAYS">
-                                    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="activity-item">
-                                        <StackPane styleClass="activity-icon-success">
-                                            <FontIcon iconLiteral="fth-arrow-down" iconSize="14" iconColor="#34C759"/>
-                                        </StackPane>
-                                        <VBox spacing="2" HBox.hgrow="ALWAYS">
-                                            <Label text="Beras Premium" styleClass="activity-title"/>
-                                            <Label text="Masuk: 50 Kg" styleClass="activity-subtitle"/>
-                                        </VBox>
-                                        <Label text="2m" styleClass="activity-time"/>
-                                    </HBox>
-                                    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="activity-item">
-                                        <StackPane styleClass="activity-icon-danger">
-                                            <FontIcon iconLiteral="fth-arrow-up" iconSize="14" iconColor="#FF3B30"/>
-                                        </StackPane>
-                                        <VBox spacing="2" HBox.hgrow="ALWAYS">
-                                            <Label text="Minyak Goreng" styleClass="activity-title"/>
-                                            <Label text="Keluar: 10 Liter" styleClass="activity-subtitle"/>
-                                        </VBox>
-                                        <Label text="15m" styleClass="activity-time"/>
-                                    </HBox>
-                                    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="activity-item">
-                                        <StackPane styleClass="activity-icon-success">
-                                            <FontIcon iconLiteral="fth-arrow-down" iconSize="14" iconColor="#34C759"/>
-                                        </StackPane>
-                                        <VBox spacing="2" HBox.hgrow="ALWAYS">
-                                            <Label text="Tepung Terigu" styleClass="activity-title"/>
-                                            <Label text="Masuk: 25 Kg" styleClass="activity-subtitle"/>
-                                        </VBox>
-                                        <Label text="1h" styleClass="activity-time"/>
-                                    </HBox>
+                            <VBox fx:id="fastMovingSection" styleClass="spatial-card" GridPane.columnIndex="1" spacing="16">
+                                <HBox alignment="CENTER_LEFT" spacing="12">
+                                    <FontIcon iconLiteral="fth-trending-up" iconSize="18" iconColor="#34C759"/>
+                                    <Label text="Fast Moving (30 Hari)" styleClass="section-title"/>
+                                </HBox>
+                                <VBox fx:id="fastMovingList" spacing="8" VBox.vgrow="ALWAYS">
+                                    <!-- Dynamic content loaded by controller -->
                                 </VBox>
                             </VBox>
                         </GridPane>
@@ -154,3 +228,6 @@
         </BorderPane>
     </HBox>
 </StackPane>
+
+
+
