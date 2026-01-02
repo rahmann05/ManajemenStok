@@ -4,27 +4,32 @@ import animatefx.animation.FadeIn;
 import animatefx.animation.FadeInUp;
 import atlantafx.base.theme.CupertinoDark;
 import atlantafx.base.theme.CupertinoLight;
-import eu.hansolo.tilesfx.Tile;
+import com.jejekatering.jstok.dao.DashboardDAO;
+import com.jejekatering.jstok.model.Bahan;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.IOException;
+import java.util.List;
 
 public class DashboardController {
 
@@ -32,11 +37,23 @@ public class DashboardController {
     @FXML private BorderPane mainBorderPane;
     @FXML private ScrollPane dashboardContent;
 
-    @FXML private StackPane card1, card2, card3, card4;
-    @FXML private VBox chartSection, activitySection;
+    @FXML private VBox card1, card2, card3, card4;
+    @FXML private VBox chartSection, restockSection, fastMovingSection;
+    @FXML private HBox statusIndicatorSection;
 
-    @FXML private Tile tileTotalStok, tileStokMasuk, tileStokKeluar, tileKritis;
-    @FXML private BarChart<String, Number> barChart;
+    @FXML private CategoryAxis xAxis;
+
+    @FXML private Label lblStokKritisValue, lblDeadStockValue, lblTransaksiHariIniValue, lblTotalSKUValue;
+    @FXML private Label lblStokKritisDesc, lblDeadStockDesc, lblTransaksiHariIniDesc, lblTotalSKUDesc;
+
+    @FXML private Label lblStokNormal, lblStokRendah, lblStokHabis;
+
+    @FXML private LineChart<String, Number> lineChart;
+    @FXML private TableView<Bahan> tblRestock;
+    @FXML private TableColumn<Bahan, String> colNamaBahan, colSatuan;
+    @FXML private TableColumn<Bahan, Integer> colSisaStok, colMinStok;
+    @FXML private TableColumn<Bahan, Void> colStatus;
+    @FXML private VBox fastMovingList;
 
     @FXML private Button btnDashboard;
     @FXML private Button btnBahan;
@@ -48,14 +65,16 @@ public class DashboardController {
 
     private Node homeView;
     private boolean isDarkMode = false;
+    private DashboardDAO dashboardDAO;
 
     @FXML
     public void initialize() {
+        dashboardDAO = new DashboardDAO();
         setTheme(false);
         homeView = dashboardContent;
 
-        setupTiles();
-        loadDummyData();
+        setupTable();
+        loadDashboardData();
         runAnimations();
         setActiveButton(btnDashboard);
     }
@@ -66,51 +85,147 @@ public class DashboardController {
         new FadeInUp(card2).setDelay(Duration.millis(200)).play();
         new FadeInUp(card3).setDelay(Duration.millis(300)).play();
         new FadeInUp(card4).setDelay(Duration.millis(400)).play();
-        new FadeInUp(chartSection).setDelay(Duration.millis(600)).play();
-        new FadeInUp(activitySection).setDelay(Duration.millis(700)).play();
+        new FadeInUp(chartSection).setDelay(Duration.millis(500)).play();
+        new FadeInUp(restockSection).setDelay(Duration.millis(600)).play();
+        new FadeInUp(fastMovingSection).setDelay(Duration.millis(700)).play();
     }
 
-    private void setupTiles() {
-        Color accentPurple = Color.web("#8B5CF6");
+    private void setupTable() {
+        colNamaBahan.setCellValueFactory(new PropertyValueFactory<>("namaBahan"));
+        colSisaStok.setCellValueFactory(new PropertyValueFactory<>("stokSaatIni"));
+        colMinStok.setCellValueFactory(new PropertyValueFactory<>("stokMinimum"));
+        colSatuan.setCellValueFactory(new PropertyValueFactory<>("satuan"));
 
-        tileTotalStok.setSkinType(Tile.SkinType.NUMBER);
-        tileTotalStok.setTitle("Total Stok");
-        tileTotalStok.setUnit("Unit");
-        tileTotalStok.setValue(1240);
-        tileTotalStok.setDescription("Aset Fisik");
-        tileTotalStok.setBackgroundColor(accentPurple);
-        tileTotalStok.setTitleColor(Color.WHITE);
-        tileTotalStok.setValueColor(Color.WHITE);
-        tileTotalStok.setUnitColor(Color.WHITE);
-        tileTotalStok.setDescriptionColor(Color.WHITE);
-        tileTotalStok.setRoundedCorners(true);
+        if (colStatus != null) {
+            colStatus.setCellFactory(param -> new TableCell<>() {
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                        setGraphic(null);
+                    } else {
+                        Bahan bahan = getTableRow().getItem();
+                        HBox statusBox = new HBox(6);
+                        statusBox.setAlignment(Pos.CENTER_LEFT);
 
-        tileStokMasuk.setSkinType(Tile.SkinType.SPARK_LINE);
-        tileStokMasuk.setTitle("Stok Masuk");
-        tileStokMasuk.setUnit("Item");
-        tileStokMasuk.setValue(254);
-        tileStokMasuk.setBarColor(Color.web("#34C759"));
-        tileStokMasuk.setRoundedCorners(true);
-        tileStokMasuk.setShadowsEnabled(false);
+                        Circle dot = new Circle(5);
+                        dot.setFill(Color.web(bahan.getStatusColor()));
 
-        tileStokKeluar.setSkinType(Tile.SkinType.SPARK_LINE);
-        tileStokKeluar.setTitle("Stok Keluar");
-        tileStokKeluar.setUnit("Item");
-        tileStokKeluar.setValue(85);
-        tileStokKeluar.setBarColor(Color.web("#FF3B30"));
-        tileStokKeluar.setRoundedCorners(true);
-        tileStokKeluar.setShadowsEnabled(false);
+                        Label statusLabel = new Label(bahan.getStatusLabel());
+                        statusLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: " + bahan.getStatusColor() + ";");
 
-        tileKritis.setSkinType(Tile.SkinType.GAUGE);
-        tileKritis.setTitle("Kapasitas");
-        tileKritis.setUnit("%");
-        tileKritis.setValue(75);
-        tileKritis.setThreshold(80);
-        tileKritis.setBarColor(accentPurple);
-        tileKritis.setRoundedCorners(true);
-        tileKritis.setShadowsEnabled(false);
+                        statusBox.getChildren().addAll(dot, statusLabel);
+                        setGraphic(statusBox);
+                    }
+                }
+            });
+        }
+    }
 
-        updateTileColors(false);
+    private void loadDashboardData() {
+        int stokKritis = dashboardDAO.getStokKritisCount();
+        int deadStock = dashboardDAO.getDeadStockCount();
+        int transaksiHariIni = dashboardDAO.getTodayTransactionCount();
+        int totalSKU = dashboardDAO.getTotalSKU();
+
+        lblStokKritisValue.setText(String.valueOf(stokKritis));
+        lblDeadStockValue.setText(String.valueOf(deadStock));
+        lblTransaksiHariIniValue.setText(String.valueOf(transaksiHariIni));
+        lblTotalSKUValue.setText(String.valueOf(totalSKU));
+
+        lblStokKritisDesc.setText(stokKritis > 0 ? "Perlu restock segera!" : "Semua stok aman");
+        lblDeadStockDesc.setText(deadStock > 0 ? "Tidak ada keluar 90 hari" : "Semua barang bergerak");
+        lblTransaksiHariIniDesc.setText(transaksiHariIni > 0 ? "Transaksi hari ini" : "Belum ada transaksi");
+        lblTotalSKUDesc.setText("Jenis barang terdaftar");
+
+        loadStatusIndicators();
+
+        loadChartData();
+
+        loadRestockData();
+
+        loadFastMovingData();
+    }
+
+    private void loadStatusIndicators() {
+        int stokNormal = dashboardDAO.getStokNormalCount();
+        int stokRendah = dashboardDAO.getStokRendahCount();
+        int stokHabis = dashboardDAO.getStokHabisCount();
+
+        if (lblStokNormal != null) lblStokNormal.setText(String.valueOf(stokNormal));
+        if (lblStokRendah != null) lblStokRendah.setText(String.valueOf(stokRendah));
+        if (lblStokHabis != null) lblStokHabis.setText(String.valueOf(stokHabis));
+    }
+
+private void loadChartData() {
+        lineChart.getData().clear();
+
+        if (xAxis != null) {
+            java.util.List<String> weekLabels = dashboardDAO.getWeekLabels();
+            xAxis.setCategories(FXCollections.observableArrayList(weekLabels));
+            xAxis.setAutoRanging(false);
+        }
+
+        List<XYChart.Series<String, Number>> allSeries = dashboardDAO.getAllStockMovementSeries();
+
+        for (XYChart.Series<String, Number> series : allSeries) {
+            lineChart.getData().add(series);
+        }
+
+        lineChart.setCreateSymbols(true);
+        lineChart.setAnimated(false);
+    }
+
+    private void loadRestockData() {
+        List<Bahan> restockItems = dashboardDAO.getRestockItems();
+        ObservableList<Bahan> data = FXCollections.observableArrayList(restockItems);
+        tblRestock.setItems(data);
+    }
+
+    private void loadFastMovingData() {
+        fastMovingList.getChildren().clear();
+        List<DashboardDAO.FastMovingItem> fastMovingItems = dashboardDAO.getFastMovingItems();
+
+        if (fastMovingItems.isEmpty()) {
+            Label emptyLabel = new Label("Belum ada data pergerakan");
+            emptyLabel.getStyleClass().add("text-secondary");
+            fastMovingList.getChildren().add(emptyLabel);
+            return;
+        }
+
+        int rank = 1;
+        for (DashboardDAO.FastMovingItem item : fastMovingItems) {
+            HBox row = createFastMovingRow(rank, item);
+            fastMovingList.getChildren().add(row);
+            rank++;
+        }
+    }
+
+    private HBox createFastMovingRow(int rank, DashboardDAO.FastMovingItem item) {
+        HBox row = new HBox(12);
+        row.setAlignment(Pos.CENTER_LEFT);
+        row.getStyleClass().add("fast-moving-item");
+        row.setPadding(new Insets(10, 12, 10, 12));
+
+        Label rankLabel = new Label(String.valueOf(rank));
+        rankLabel.getStyleClass().add("fast-moving-rank");
+        rankLabel.setMinWidth(28);
+        rankLabel.setAlignment(Pos.CENTER);
+
+        VBox infoBox = new VBox(2);
+        HBox.setHgrow(infoBox, Priority.ALWAYS);
+        Label nameLabel = new Label(item.getNamaBahan());
+        nameLabel.getStyleClass().add("fast-moving-name");
+        Label qtyLabel = new Label("Keluar: " + item.getTotalKeluar() + " " + item.getSatuan());
+        qtyLabel.getStyleClass().add("fast-moving-qty");
+        infoBox.getChildren().addAll(nameLabel, qtyLabel);
+
+        FontIcon trendIcon = new FontIcon("fth-trending-up");
+        trendIcon.setIconSize(16);
+        trendIcon.setIconColor(Color.web("#34C759"));
+
+        row.getChildren().addAll(rankLabel, infoBox, trendIcon);
+        return row;
     }
 
     private void setActiveButton(Button activeButton) {
@@ -146,29 +261,7 @@ public class DashboardController {
             Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
             if (rootStack != null) rootStack.getStyleClass().remove("dark-mode");
         }
-        updateTileColors(dark);
         updateToggleIconColor(dark);
-    }
-
-    private void updateTileColors(boolean dark) {
-        Color textColor = dark ? Color.WHITE : Color.web("#1C1C1E");
-        Color glassBg = Color.TRANSPARENT;
-
-        tileStokMasuk.setBackgroundColor(glassBg);
-        tileStokMasuk.setTitleColor(textColor);
-        tileStokMasuk.setValueColor(textColor);
-        tileStokMasuk.setUnitColor(textColor);
-
-        tileStokKeluar.setBackgroundColor(glassBg);
-        tileStokKeluar.setTitleColor(textColor);
-        tileStokKeluar.setValueColor(textColor);
-        tileStokKeluar.setUnitColor(textColor);
-
-        tileKritis.setBackgroundColor(glassBg);
-        tileKritis.setTitleColor(textColor);
-        tileKritis.setValueColor(textColor);
-        tileKritis.setUnitColor(textColor);
-        tileKritis.setNeedleColor(textColor);
     }
 
     private void updateToggleIconColor(boolean dark) {
@@ -185,6 +278,7 @@ public class DashboardController {
     protected void onMenuDashboardClick() {
         if (homeView != null) {
             mainBorderPane.setCenter(homeView);
+            loadDashboardData(); // Refresh data
             runAnimations();
         }
         setActiveButton(btnDashboard);
@@ -225,15 +319,39 @@ public class DashboardController {
         setActiveButton(btnLaporan);
     }
 
-    private void loadDummyData() {
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.getData().add(new XYChart.Data<>("Sen", 10));
-        series.getData().add(new XYChart.Data<>("Sel", 25));
-        series.getData().add(new XYChart.Data<>("Rab", 15));
-        series.getData().add(new XYChart.Data<>("Kam", 40));
-        series.getData().add(new XYChart.Data<>("Jum", 20));
-        barChart.getData().clear();
-        barChart.getData().add(series);
+    @FXML
+    protected void onInputMasukClick() {
+        loadPage("StokMasukView");
+        setActiveButton(btnStokMasuk);
+    }
+
+    @FXML
+    protected void onCekStokMinimumClick() {
+        // Scroll ke bagian restock section di bawah dashboard
+        scrollToRestockSection();
+    }
+
+    private void scrollToRestockSection() {
+        if (dashboardContent != null && restockSection != null) {
+            // Animate scroll to bottom where restock table is located
+            javafx.animation.Timeline timeline = new javafx.animation.Timeline(
+                new javafx.animation.KeyFrame(
+                    Duration.millis(500),
+                    new javafx.animation.KeyValue(
+                        dashboardContent.vvalueProperty(),
+                        1.0, // Scroll to bottom
+                        javafx.animation.Interpolator.EASE_BOTH
+                    )
+                )
+            );
+            timeline.play();
+
+            // Highlight the restock section briefly
+            restockSection.setStyle("-fx-effect: dropshadow(gaussian, rgba(255, 149, 0, 0.4), 20, 0.3, 0, 0);");
+            javafx.animation.PauseTransition pause = new javafx.animation.PauseTransition(Duration.seconds(1.5));
+            pause.setOnFinished(e -> restockSection.setStyle(""));
+            pause.play();
+        }
     }
 
     @FXML

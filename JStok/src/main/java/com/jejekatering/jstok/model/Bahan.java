@@ -7,6 +7,12 @@ public class Bahan {
     private int stokSaatIni;
     private int stokMinimum;
 
+    public enum StatusStok {
+        NORMAL,
+        RENDAH,
+        HABIS
+    }
+
     public Bahan(int idBahan, String namaBahan, String satuan, int stokSaatIni, int stokMinimum) {
         this.idBahan = idBahan;
         this.namaBahan = namaBahan;
@@ -29,4 +35,30 @@ public class Bahan {
 
     public int getStokMinimum() { return stokMinimum; }
     public void setStokMinimum(int stokMinimum) { this.stokMinimum = stokMinimum; }
+
+    public StatusStok getStatusStok() {
+        if (stokSaatIni == 0) {
+            return StatusStok.HABIS;
+        } else if (stokSaatIni <= stokMinimum) {
+            return StatusStok.RENDAH;
+        } else {
+            return StatusStok.NORMAL;
+        }
+    }
+
+    public String getStatusColor() {
+        return switch (getStatusStok()) {
+            case HABIS -> "#FF3B30";
+            case RENDAH -> "#FF9500";
+            case NORMAL -> "#34C759";
+        };
+    }
+
+    public String getStatusLabel() {
+        return switch (getStatusStok()) {
+            case HABIS -> "Habis";
+            case RENDAH -> "Rendah";
+            case NORMAL -> "Normal";
+        };
+    }
 }
