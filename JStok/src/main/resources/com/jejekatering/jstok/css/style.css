@@ -212,6 +212,7 @@
 
 .chart-legend {
     -fx-background-color: transparent;
+    -fx-padding: 10;
 }
 
 .chart-legend .label {
@@ -219,20 +220,136 @@
     -fx-font-size: 12px;
 }
 
-.default-color0.chart-bar {
-    -fx-background-color: linear-gradient(to top, #7C3AED 0%, #8B5CF6 100%);
-    -fx-background-radius: 6 6 0 0;
-    -fx-bar-fill: #8B5CF6;
+.chart-legend-item-symbol {
+    -fx-background-radius: 8;
 }
 
-.default-color1.chart-bar {
-    -fx-background-color: linear-gradient(to top, #2DB14F 0%, #34C759 100%);
-    -fx-background-radius: 6 6 0 0;
+.default-color0.chart-series-line {
+    -fx-stroke: #22C55E;
+    -fx-stroke-width: 2.5px;
 }
 
-.default-color2.chart-bar {
-    -fx-background-color: linear-gradient(to top, #E6352B 0%, #FF3B30 100%);
-    -fx-background-radius: 6 6 0 0;
+.default-color0.chart-line-symbol {
+    -fx-background-color: white, #22C55E;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 6;
+    -fx-padding: 5;
+}
+
+.default-color0.chart-legend-item-symbol {
+    -fx-background-color: #22C55E;
+}
+
+.default-color1.chart-series-line {
+    -fx-stroke: #EF4444;
+    -fx-stroke-width: 2.5px;
+}
+
+.default-color1.chart-line-symbol {
+    -fx-background-color: white, #EF4444;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 6;
+    -fx-padding: 5;
+}
+
+.default-color1.chart-legend-item-symbol {
+    -fx-background-color: #EF4444;
+}
+
+.default-color2.chart-series-line {
+    -fx-stroke: #8B5CF6;
+    -fx-stroke-width: 2.5px;
+}
+
+.default-color2.chart-line-symbol {
+    -fx-background-color: white, #8B5CF6;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 6;
+    -fx-padding: 5;
+}
+
+.default-color2.chart-legend-item-symbol {
+    -fx-background-color: #8B5CF6;
+}
+
+.default-color3.chart-series-line {
+    -fx-stroke: #F59E0B;
+    -fx-stroke-width: 2.5px;
+}
+
+.default-color3.chart-line-symbol {
+    -fx-background-color: white, #F59E0B;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 6;
+    -fx-padding: 5;
+}
+
+.default-color3.chart-legend-item-symbol {
+    -fx-background-color: #F59E0B;
+}
+
+.default-color4.chart-series-line {
+    -fx-stroke: #06B6D4;
+    -fx-stroke-width: 2.5px;
+}
+
+.default-color4.chart-line-symbol {
+    -fx-background-color: white, #06B6D4;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 6;
+    -fx-padding: 5;
+}
+
+.default-color4.chart-legend-item-symbol {
+    -fx-background-color: #06B6D4;
+}
+
+.default-color5.chart-series-line {
+    -fx-stroke: #EC4899;
+    -fx-stroke-width: 2.5px;
+}
+
+.default-color5.chart-line-symbol {
+    -fx-background-color: white, #EC4899;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 6;
+    -fx-padding: 5;
+}
+
+.default-color5.chart-legend-item-symbol {
+    -fx-background-color: #EC4899;
+}
+
+.default-color6.chart-series-line {
+    -fx-stroke: #14B8A6;
+    -fx-stroke-width: 2.5px;
+}
+
+.default-color6.chart-line-symbol {
+    -fx-background-color: white, #14B8A6;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 6;
+    -fx-padding: 5;
+}
+
+.default-color6.chart-legend-item-symbol {
+    -fx-background-color: #14B8A6;
+}
+
+.default-color7.chart-series-line {
+    -fx-stroke: #6366F1;
+    -fx-stroke-width: 2.5px;
+}
+
+.default-color7.chart-line-symbol {
+    -fx-background-color: white, #6366F1;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 6;
+    -fx-padding: 5;
+}
+
+.default-color7.chart-legend-item-symbol {
+    -fx-background-color: #6366F1;
 }
 
 .theme-toggle {
@@ -909,7 +1026,43 @@
 }
 
 .form-combo-popup .list-cell:hover {
-    -fx-background-color: -color-accent-subtle;
+    -fx-background-color: rgba(139, 92, 246, 0.12);
+}
+
+.form-combo-popup .list-cell:focused,
+.form-combo-popup .list-cell:selected {
+    -fx-background-color: rgba(139, 92, 246, 0.2);
+    -fx-text-fill: #8B5CF6;
+}
+
+.form-combo-popup .list-cell:selected:hover {
+    -fx-background-color: rgba(139, 92, 246, 0.25);
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: -color-bg-elevated;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 16, 0, 0, 6);
+}
+
+.combo-box-popup .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: -color-text-primary;
+    -fx-padding: 10 16;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: rgba(139, 92, 246, 0.12);
+}
+
+.combo-box-popup .list-cell:focused,
+.combo-box-popup .list-cell:selected {
+    -fx-background-color: rgba(139, 92, 246, 0.2);
+    -fx-text-fill: #8B5CF6;
+}
+
+.combo-box-popup .list-cell:selected:hover {
+    -fx-background-color: rgba(139, 92, 246, 0.25);
 }
 
 .form-date {
@@ -948,6 +1101,27 @@
     -fx-border-color: rgba(255, 255, 255, 0.08);
 }
 
+.root.dark-mode .combo-box-popup .list-view,
+.root.dark-mode .form-combo-popup .list-view {
+    -fx-background-color: #2C2C2E;
+}
+
+.root.dark-mode .combo-box-popup .list-cell,
+.root.dark-mode .form-combo-popup .list-cell {
+    -fx-text-fill: #F5F5F7;
+}
+
+.root.dark-mode .combo-box-popup .list-cell:hover,
+.root.dark-mode .form-combo-popup .list-cell:hover {
+    -fx-background-color: rgba(139, 92, 246, 0.15);
+}
+
+.root.dark-mode .combo-box-popup .list-cell:selected,
+.root.dark-mode .form-combo-popup .list-cell:selected {
+    -fx-background-color: rgba(139, 92, 246, 0.25);
+    -fx-text-fill: #A78BFA;
+}
+
 .root.dark-mode .form-date {
     -fx-background-color: rgba(28, 28, 30, 0.8);
     -fx-border-color: rgba(255, 255, 255, 0.08);
@@ -968,72 +1142,146 @@
 }
 
 .metric-card {
-    -fx-background-color:
-        linear-gradient(to bottom, -glass-inner-glow 0%, transparent 50%),
-        -glass-bg;
-    -fx-background-insets: 0, 1;
-    -fx-background-radius: 16, 15;
-    -fx-border-color: -glass-border;
+    -fx-background-color: -glass-bg;
+    -fx-background-radius: 16;
+    -fx-border-color: -glass-border-subtle;
     -fx-border-width: 1;
     -fx-border-radius: 16;
-    -fx-effect: dropshadow(gaussian, -glass-shadow, 16, 0.1, 0, 4);
+    -fx-effect: dropshadow(gaussian, -glass-shadow, 12, 0.08, 0, 3);
     -fx-padding: 20;
 }
 
 .metric-card:hover {
-    -fx-effect: dropshadow(gaussian, -glass-shadow-elevated, 20, 0.14, 0, 6);
+    -fx-effect: dropshadow(gaussian, -glass-shadow-elevated, 16, 0.12, 0, 5);
 }
 
 .metric-card-colored {
     -fx-background-radius: 16;
-    -fx-padding: 20;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 16, 0.1, 0, 6);
+    -fx-border-radius: 16;
+    -fx-border-width: 0;
+    -fx-padding: 18 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.12), 12, 0.08, 0, 4);
 }
 
 .metric-card-colored:hover {
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 20, 0.15, 0, 8);
-    -fx-scale-x: 1.02;
-    -fx-scale-y: 1.02;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.18), 16, 0.12, 0, 6);
 }
 
 .metric-card-red {
-    -fx-background-color: linear-gradient(to bottom right, #FF6B6B 0%, #EE5A5A 50%, #DC4444 100%);
+    -fx-background-color: linear-gradient(to bottom right, #FEE2E2 0%, #FECACA 100%);
+    -fx-border-color: #FECACA;
+    -fx-border-width: 1;
+}
+
+.metric-card-red .metric-title-light {
+    -fx-text-fill: #991B1B;
+}
+
+.metric-card-red .metric-value-light {
+    -fx-text-fill: #DC2626;
+}
+
+.metric-card-red .metric-desc-light {
+    -fx-text-fill: #B91C1C;
 }
 
 .metric-card-slate {
-    -fx-background-color: linear-gradient(to bottom right, #64748B 0%, #556270 50%, #475569 100%);
+    -fx-background-color: linear-gradient(to bottom right, #F1F5F9 0%, #E2E8F0 100%);
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 1;
+}
+
+.metric-card-slate .metric-title-light {
+    -fx-text-fill: #334155;
+}
+
+.metric-card-slate .metric-value-light {
+    -fx-text-fill: #475569;
+}
+
+.metric-card-slate .metric-desc-light {
+    -fx-text-fill: #64748B;
 }
 
 .metric-card-purple {
-    -fx-background-color: linear-gradient(to bottom right, #A78BFA 0%, #8B5CF6 50%, #7C3AED 100%);
+    -fx-background-color: linear-gradient(to bottom right, #EDE9FE 0%, #DDD6FE 100%);
+    -fx-border-color: #DDD6FE;
+    -fx-border-width: 1;
+}
+
+.metric-card-purple .metric-title-light {
+    -fx-text-fill: #5B21B6;
+}
+
+.metric-card-purple .metric-value-light {
+    -fx-text-fill: #7C3AED;
+}
+
+.metric-card-purple .metric-desc-light {
+    -fx-text-fill: #6D28D9;
 }
 
 .metric-card-green {
-    -fx-background-color: linear-gradient(to bottom right, #4ADE80 0%, #34C759 50%, #22C55E 100%);
+    -fx-background-color: linear-gradient(to bottom right, #DCFCE7 0%, #BBF7D0 100%);
+    -fx-border-color: #BBF7D0;
+    -fx-border-width: 1;
+}
+
+.metric-card-green .metric-title-light {
+    -fx-text-fill: #166534;
+}
+
+.metric-card-green .metric-value-light {
+    -fx-text-fill: #22C55E;
+}
+
+.metric-card-green .metric-desc-light {
+    -fx-text-fill: #15803D;
 }
 
 .metric-icon-white {
-    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-color: rgba(255, 255, 255, 0.6);
     -fx-padding: 10;
     -fx-background-radius: 10;
+    -fx-border-color: rgba(255, 255, 255, 0.8);
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+}
+
+.metric-card-red .metric-icon-white {
+    -fx-background-color: rgba(220, 38, 38, 0.12);
+    -fx-border-color: rgba(220, 38, 38, 0.2);
+}
+
+.metric-card-slate .metric-icon-white {
+    -fx-background-color: rgba(71, 85, 105, 0.12);
+    -fx-border-color: rgba(71, 85, 105, 0.2);
+}
+
+.metric-card-purple .metric-icon-white {
+    -fx-background-color: rgba(139, 92, 246, 0.12);
+    -fx-border-color: rgba(139, 92, 246, 0.2);
+}
+
+.metric-card-green .metric-icon-white {
+    -fx-background-color: rgba(34, 197, 94, 0.12);
+    -fx-border-color: rgba(34, 197, 94, 0.2);
 }
 
 .metric-title-light {
-    -fx-font-size: 13px;
+    -fx-font-size: 12px;
     -fx-font-weight: 600;
-    -fx-text-fill: rgba(255, 255, 255, 0.85);
 }
 
 .metric-value-light {
-    -fx-font-size: 36px;
+    -fx-font-size: 32px;
     -fx-font-weight: 700;
-    -fx-text-fill: white;
     -fx-font-family: 'SF Pro Display', 'Inter', sans-serif;
 }
 
 .metric-desc-light {
-    -fx-font-size: 12px;
-    -fx-text-fill: rgba(255, 255, 255, 0.7);
+    -fx-font-size: 11px;
+    -fx-font-weight: 500;
 }
 
 .status-indicator-bar {
@@ -1057,19 +1305,96 @@
 }
 
 .root.dark-mode .metric-card-red {
-    -fx-background-color: linear-gradient(to bottom right, #DC4444 0%, #C53030 50%, #B91C1C 100%);
+    -fx-background-color: linear-gradient(to bottom right, rgba(220, 38, 38, 0.2) 0%, rgba(185, 28, 28, 0.25) 100%);
+    -fx-border-color: rgba(220, 38, 38, 0.3);
+}
+
+.root.dark-mode .metric-card-red .metric-title-light {
+    -fx-text-fill: #FCA5A5;
+}
+
+.root.dark-mode .metric-card-red .metric-value-light {
+    -fx-text-fill: #F87171;
+}
+
+.root.dark-mode .metric-card-red .metric-desc-light {
+    -fx-text-fill: #FCA5A5;
 }
 
 .root.dark-mode .metric-card-slate {
-    -fx-background-color: linear-gradient(to bottom right, #475569 0%, #3F4957 50%, #334155 100%);
+    -fx-background-color: linear-gradient(to bottom right, rgba(71, 85, 105, 0.2) 0%, rgba(51, 65, 85, 0.25) 100%);
+    -fx-border-color: rgba(100, 116, 139, 0.3);
+}
+
+.root.dark-mode .metric-card-slate .metric-title-light {
+    -fx-text-fill: #CBD5E1;
+}
+
+.root.dark-mode .metric-card-slate .metric-value-light {
+    -fx-text-fill: #94A3B8;
+}
+
+.root.dark-mode .metric-card-slate .metric-desc-light {
+    -fx-text-fill: #CBD5E1;
 }
 
 .root.dark-mode .metric-card-purple {
-    -fx-background-color: linear-gradient(to bottom right, #8B5CF6 0%, #7C3AED 50%, #6D28D9 100%);
+    -fx-background-color: linear-gradient(to bottom right, rgba(139, 92, 246, 0.2) 0%, rgba(109, 40, 217, 0.25) 100%);
+    -fx-border-color: rgba(139, 92, 246, 0.3);
+}
+
+.root.dark-mode .metric-card-purple .metric-title-light {
+    -fx-text-fill: #C4B5FD;
+}
+
+.root.dark-mode .metric-card-purple .metric-value-light {
+    -fx-text-fill: #A78BFA;
+}
+
+.root.dark-mode .metric-card-purple .metric-desc-light {
+    -fx-text-fill: #C4B5FD;
 }
 
 .root.dark-mode .metric-card-green {
-    -fx-background-color: linear-gradient(to bottom right, #34C759 0%, #22C55E 50%, #16A34A 100%);
+    -fx-background-color: linear-gradient(to bottom right, rgba(34, 197, 94, 0.2) 0%, rgba(22, 163, 74, 0.25) 100%);
+    -fx-border-color: rgba(34, 197, 94, 0.3);
+}
+
+.root.dark-mode .metric-card-green .metric-title-light {
+    -fx-text-fill: #86EFAC;
+}
+
+.root.dark-mode .metric-card-green .metric-value-light {
+    -fx-text-fill: #4ADE80;
+}
+
+.root.dark-mode .metric-card-green .metric-desc-light {
+    -fx-text-fill: #86EFAC;
+}
+
+.root.dark-mode .metric-icon-white {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-border-color: rgba(255, 255, 255, 0.12);
+}
+
+.root.dark-mode .metric-card-red .metric-icon-white {
+    -fx-background-color: rgba(248, 113, 113, 0.15);
+    -fx-border-color: rgba(248, 113, 113, 0.25);
+}
+
+.root.dark-mode .metric-card-slate .metric-icon-white {
+    -fx-background-color: rgba(148, 163, 184, 0.15);
+    -fx-border-color: rgba(148, 163, 184, 0.25);
+}
+
+.root.dark-mode .metric-card-purple .metric-icon-white {
+    -fx-background-color: rgba(167, 139, 250, 0.15);
+    -fx-border-color: rgba(167, 139, 250, 0.25);
+}
+
+.root.dark-mode .metric-card-green .metric-icon-white {
+    -fx-background-color: rgba(74, 222, 128, 0.15);
+    -fx-border-color: rgba(74, 222, 128, 0.25);
 }
 
 .legend-dot-masuk {
