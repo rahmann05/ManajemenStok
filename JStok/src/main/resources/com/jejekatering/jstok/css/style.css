@@ -909,7 +909,43 @@
 }
 
 .form-combo-popup .list-cell:hover {
-    -fx-background-color: -color-accent-subtle;
+    -fx-background-color: rgba(139, 92, 246, 0.12);
+}
+
+.form-combo-popup .list-cell:focused,
+.form-combo-popup .list-cell:selected {
+    -fx-background-color: rgba(139, 92, 246, 0.2);
+    -fx-text-fill: #8B5CF6;
+}
+
+.form-combo-popup .list-cell:selected:hover {
+    -fx-background-color: rgba(139, 92, 246, 0.25);
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: -color-bg-elevated;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 16, 0, 0, 6);
+}
+
+.combo-box-popup .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: -color-text-primary;
+    -fx-padding: 10 16;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: rgba(139, 92, 246, 0.12);
+}
+
+.combo-box-popup .list-cell:focused,
+.combo-box-popup .list-cell:selected {
+    -fx-background-color: rgba(139, 92, 246, 0.2);
+    -fx-text-fill: #8B5CF6;
+}
+
+.combo-box-popup .list-cell:selected:hover {
+    -fx-background-color: rgba(139, 92, 246, 0.25);
 }
 
 .form-date {
@@ -946,6 +982,27 @@
 .root.dark-mode .form-combo {
     -fx-background-color: rgba(28, 28, 30, 0.8);
     -fx-border-color: rgba(255, 255, 255, 0.08);
+}
+
+.root.dark-mode .combo-box-popup .list-view,
+.root.dark-mode .form-combo-popup .list-view {
+    -fx-background-color: #2C2C2E;
+}
+
+.root.dark-mode .combo-box-popup .list-cell,
+.root.dark-mode .form-combo-popup .list-cell {
+    -fx-text-fill: #F5F5F7;
+}
+
+.root.dark-mode .combo-box-popup .list-cell:hover,
+.root.dark-mode .form-combo-popup .list-cell:hover {
+    -fx-background-color: rgba(139, 92, 246, 0.15);
+}
+
+.root.dark-mode .combo-box-popup .list-cell:selected,
+.root.dark-mode .form-combo-popup .list-cell:selected {
+    -fx-background-color: rgba(139, 92, 246, 0.25);
+    -fx-text-fill: #A78BFA;
 }
 
 .root.dark-mode .form-date {

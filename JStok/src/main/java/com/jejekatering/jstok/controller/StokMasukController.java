@@ -6,6 +6,7 @@ import com.jejekatering.jstok.model.Bahan;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 import java.time.LocalDate;
 import java.util.Map;
@@ -17,9 +18,15 @@ public class StokMasukController {
     @FXML private DatePicker datePicker;
     @FXML private TextField txtKeterangan;
 
-    @FXML private Label lblTotalMasuk;
-    @FXML private Label lblJenisBahan;
-    @FXML private Label lblWaktuTerakhir;
+    @FXML private Label lblInputHariIni;
+    @FXML private Label lblTerakhirMasuk;
+    @FXML private Label lblPenginput;
+
+    @FXML private TableView<StokDAO.TransaksiHariIni> tblTransaksiHariIni;
+    @FXML private TableColumn<StokDAO.TransaksiHariIni, String> colJam;
+    @FXML private TableColumn<StokDAO.TransaksiHariIni, String> colNamaBahan;
+    @FXML private TableColumn<StokDAO.TransaksiHariIni, String> colJumlah;
+    @FXML private TableColumn<StokDAO.TransaksiHariIni, String> colOleh;
 
     private BahanDAO bahanDAO = new BahanDAO();
     private StokDAO stokDAO = new StokDAO();
@@ -28,6 +35,7 @@ public class StokMasukController {
     public void initialize() {
         datePicker.setValue(LocalDate.now());
         setupComboBox();
+        setupTable();
         refreshData();
     }
 
@@ -40,16 +48,40 @@ public class StokMasukController {
         });
     }
 
+    private void setupTable() {
+        if (tblTransaksiHariIni != null && colJam != null) {
+            colJam.setCellValueFactory(new PropertyValueFactory<>("jam"));
+            colNamaBahan.setCellValueFactory(new PropertyValueFactory<>("namaBahan"));
+            colJumlah.setCellValueFactory(new PropertyValueFactory<>("jumlah"));
+            colOleh.setCellValueFactory(new PropertyValueFactory<>("oleh"));
+
+            tblTransaksiHariIni.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        }
+    }
+
     private void refreshData() {
-        // Ambil bahan dari Database agar muncul di dropdown
         ObservableList<Bahan> list = bahanDAO.getAllBahan();
         comboBahan.setItems(list);
 
-        // Ambil data statistik hari ini
         Map<String, String> stats = stokDAO.getRingkasanHariIni();
-        lblTotalMasuk.setText(stats.getOrDefault("total_item", "0") + " Item");
-        lblJenisBahan.setText(stats.getOrDefault("total_jenis", "0") + " Jenis");
-        lblWaktuTerakhir.setText(stats.getOrDefault("jam_terakhir", "-") + " WIB");
+
+        if (lblInputHariIni != null) {
+            int totalTransaksi = Integer.parseInt(stats.getOrDefault("total_transaksi", "0"));
+            lblInputHariIni.setText(totalTransaksi + " Transaksi");
+        }
+
+        if (lblTerakhirMasuk != null) {
+            lblTerakhirMasuk.setText(stats.getOrDefault("terakhir_masuk", "-"));
+        }
+
+        if (lblPenginput != null) {
+            lblPenginput.setText(stats.getOrDefault("penginput", "-"));
+        }
+
+        if (tblTransaksiHariIni != null) {
+            tblTransaksiHariIni.getItems().clear();
+            tblTransaksiHariIni.setItems(stokDAO.getTransaksiHariIni());
+        }
     }
 
     @FXML
@@ -67,7 +99,8 @@ public class StokMasukController {
             if (success) {
                 txtJumlah.clear();
                 txtKeterangan.clear();
-                refreshData(); // Supaya angka di kanan langsung update
+                comboBahan.setValue(null);
+                refreshData();
                 new Alert(Alert.AlertType.INFORMATION, "Stok berhasil masuk!").show();
             }
         } catch (NumberFormatException e) {

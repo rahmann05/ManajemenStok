@@ -152,7 +152,6 @@ public class DashboardDAO {
         return 0;
     }
 
-    // Kartu 4: Total SKU Aktif - jumlah total jenis barang
     public int getTotalSKU() {
         String query = "SELECT COUNT(*) as total FROM bahan";
         try (Connection conn = KonekDB.getConnection();
@@ -167,7 +166,6 @@ public class DashboardDAO {
         return 0;
     }
 
-    // Chart: Frekuensi transaksi masuk per hari (7 hari terakhir)
     public XYChart.Series<String, Number> getChartDataMasukFrequency() {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Masuk");
@@ -355,5 +353,3 @@ public class DashboardDAO {
         return series;
     }
 }
-
-
