@@ -41,7 +41,6 @@ public class StokMasukController {
     }
 
     private void refreshData() {
-        // Ambil bahan dari Database agar muncul di dropdown
         ObservableList<Bahan> list = bahanDAO.getAllBahan();
         comboBahan.setItems(list);
 
@@ -67,7 +66,7 @@ public class StokMasukController {
             if (success) {
                 txtJumlah.clear();
                 txtKeterangan.clear();
-                refreshData(); // Supaya angka di kanan langsung update
+                refreshData();
                 new Alert(Alert.AlertType.INFORMATION, "Stok berhasil masuk!").show();
             }
         } catch (NumberFormatException e) {

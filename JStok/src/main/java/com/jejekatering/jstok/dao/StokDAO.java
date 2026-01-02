@@ -45,7 +45,7 @@ public class StokDAO {
 
     public Map<String, String> getRingkasanHariIni() {
         Map<String, String> stats = new HashMap<>();
-        // Query disesuaikan dengan nama tabel kamu
+        
         String query = "SELECT SUM(jumlah) as total_item, COUNT(DISTINCT id_bahan) as total_jenis, MAX(tanggal) as jam_terakhir " +
                 "FROM transaksi_stok WHERE jenis_transaksi = 'Masuk' AND DATE(tanggal) = CURDATE()";
 
