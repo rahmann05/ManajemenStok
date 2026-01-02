@@ -64,7 +64,8 @@
 
                 <Region VBox.vgrow="ALWAYS" minHeight="20"/>
 
-                <Button text="Simpan Stok Masuk" styleClass="button-primary" maxWidth="Infinity" prefHeight="48">
+                <Button text="Simpan Stok Masuk" styleClass="button-primary"
+                        maxWidth="Infinity" prefHeight="48" onAction="#handleSimpan">
                     <graphic>
                         <FontIcon iconLiteral="fth-plus-circle" iconColor="white" iconSize="16"/>
                     </graphic>
@@ -80,7 +81,7 @@
                             <FontIcon iconLiteral="fth-trending-up" iconColor="#22C55E" iconSize="18"/>
                             <Label text="Total Stok Masuk" styleClass="stat-label"/>
                         </HBox>
-                        <Label text="25 Item" styleClass="stat-value"/>
+                        <Label fx:id="lblTotalMasuk" text="0 Item" styleClass="stat-value"/>
                     </VBox>
 
                     <VBox styleClass="stat-card-info" spacing="6">
@@ -88,7 +89,7 @@
                             <FontIcon iconLiteral="fth-package" iconColor="#8B5CF6" iconSize="18"/>
                             <Label text="Jenis Bahan" styleClass="stat-label"/>
                         </HBox>
-                        <Label text="8 Jenis" styleClass="stat-value"/>
+                        <Label fx:id="lblJenisBahan" text="0 Jenis" styleClass="stat-value"/>
                     </VBox>
 
                     <VBox styleClass="stat-card-warning" spacing="6">
@@ -96,11 +97,10 @@
                             <FontIcon iconLiteral="fth-clock" iconColor="#F59E0B" iconSize="18"/>
                             <Label text="Transaksi Terakhir" styleClass="stat-label"/>
                         </HBox>
-                        <Label text="10:30 WIB" styleClass="stat-value"/>
+                        <Label fx:id="lblWaktuTerakhir" text="-" styleClass="stat-value"/>
                     </VBox>
                 </VBox>
             </VBox>
         </GridPane>
     </VBox>
 </ScrollPane>
-
