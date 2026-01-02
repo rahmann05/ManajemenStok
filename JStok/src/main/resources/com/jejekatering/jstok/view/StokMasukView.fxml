@@ -5,6 +5,8 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -25,12 +27,43 @@
             <Label text="Catat barang masuk dari supplier atau belanja" styleClass="text-secondary"/>
         </VBox>
 
+        <!-- Ringkasan Hari Ini Cards -->
+        <HBox spacing="16">
+            <!-- Card 1: Input Hari Ini -->
+            <VBox styleClass="stat-card-success" spacing="6" HBox.hgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <FontIcon iconLiteral="fth-edit-3" iconColor="#22C55E" iconSize="18"/>
+                    <Label text="Input Hari Ini" styleClass="stat-label"/>
+                </HBox>
+                <Label fx:id="lblInputHariIni" text="0 Transaksi" styleClass="stat-value"/>
+            </VBox>
+
+            <!-- Card 2: Terakhir Masuk -->
+            <VBox styleClass="stat-card-info" spacing="6" HBox.hgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <FontIcon iconLiteral="fth-package" iconColor="#8B5CF6" iconSize="18"/>
+                    <Label text="Terakhir Masuk" styleClass="stat-label"/>
+                </HBox>
+                <Label fx:id="lblTerakhirMasuk" text="-" styleClass="stat-value" style="-fx-font-size: 16px;"/>
+            </VBox>
+
+            <!-- Card 3: Penginput -->
+            <VBox styleClass="stat-card-warning" spacing="6" HBox.hgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <FontIcon iconLiteral="fth-user" iconColor="#F59E0B" iconSize="18"/>
+                    <Label text="Penginput" styleClass="stat-label"/>
+                </HBox>
+                <Label fx:id="lblPenginput" text="-" styleClass="stat-value"/>
+            </VBox>
+        </HBox>
+
         <GridPane hgap="20" VBox.vgrow="ALWAYS">
             <columnConstraints>
-                <ColumnConstraints percentWidth="60" hgrow="ALWAYS"/>
-                <ColumnConstraints prefWidth="320" minWidth="280"/>
+                <ColumnConstraints percentWidth="45"/>
+                <ColumnConstraints percentWidth="55"/>
             </columnConstraints>
 
+            <!-- Form Input -->
             <VBox styleClass="spatial-card" GridPane.columnIndex="0" spacing="20">
                 <VBox spacing="4">
                     <Label text="Form Input Stok Masuk" styleClass="section-title"/>
@@ -64,41 +97,41 @@
 
                 <Region VBox.vgrow="ALWAYS" minHeight="20"/>
 
-                <Button text="Simpan Stok Masuk" styleClass="button-primary" maxWidth="Infinity" prefHeight="48">
+                <Button text="Simpan Stok Masuk" styleClass="button-primary"
+                        maxWidth="Infinity" prefHeight="48" onAction="#handleSimpan">
                     <graphic>
                         <FontIcon iconLiteral="fth-plus-circle" iconColor="white" iconSize="16"/>
                     </graphic>
                 </Button>
             </VBox>
 
-            <VBox spacing="16" GridPane.columnIndex="1">
-                <VBox styleClass="spatial-card" spacing="16">
-                    <Label text="Ringkasan Hari Ini" styleClass="section-title"/>
-
-                    <VBox styleClass="stat-card-success" spacing="6">
-                        <HBox alignment="CENTER_LEFT" spacing="10">
-                            <FontIcon iconLiteral="fth-trending-up" iconColor="#22C55E" iconSize="18"/>
-                            <Label text="Total Stok Masuk" styleClass="stat-label"/>
-                        </HBox>
-                        <Label text="25 Item" styleClass="stat-value"/>
+            <!-- Tabel Transaksi Hari Ini -->
+            <VBox styleClass="spatial-card" GridPane.columnIndex="1" spacing="16">
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <FontIcon iconLiteral="fth-list" iconColor="#8B5CF6" iconSize="18"/>
+                    <VBox spacing="2">
+                        <Label text="Transaksi Hari Ini" styleClass="section-title"/>
+                        <Label text="Daftar input stok masuk hari ini" styleClass="text-secondary" style="-fx-font-size: 11px;"/>
                     </VBox>
+                </HBox>
 
-                    <VBox styleClass="stat-card-info" spacing="6">
-                        <HBox alignment="CENTER_LEFT" spacing="10">
-                            <FontIcon iconLiteral="fth-package" iconColor="#8B5CF6" iconSize="18"/>
-                            <Label text="Jenis Bahan" styleClass="stat-label"/>
-                        </HBox>
-                        <Label text="8 Jenis" styleClass="stat-value"/>
-                    </VBox>
-
-                    <VBox styleClass="stat-card-warning" spacing="6">
-                        <HBox alignment="CENTER_LEFT" spacing="10">
-                            <FontIcon iconLiteral="fth-clock" iconColor="#F59E0B" iconSize="18"/>
-                            <Label text="Transaksi Terakhir" styleClass="stat-label"/>
-                        </HBox>
-                        <Label text="10:30 WIB" styleClass="stat-value"/>
-                    </VBox>
-                </VBox>
+                <TableView fx:id="tblTransaksiHariIni" styleClass="modern-table" VBox.vgrow="ALWAYS" minHeight="280">
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                    <columns>
+                        <TableColumn fx:id="colJam" text="Jam" prefWidth="70" minWidth="60"/>
+                        <TableColumn fx:id="colNamaBahan" text="Nama Bahan" prefWidth="150" minWidth="120"/>
+                        <TableColumn fx:id="colJumlah" text="Jumlah" prefWidth="100" minWidth="80"/>
+                        <TableColumn fx:id="colOleh" text="Oleh" prefWidth="100" minWidth="80"/>
+                    </columns>
+                    <placeholder>
+                        <VBox alignment="CENTER" spacing="8">
+                            <FontIcon iconLiteral="fth-inbox" iconSize="32" iconColor="#AEAEB2"/>
+                            <Label text="Belum ada transaksi hari ini" styleClass="text-secondary"/>
+                        </VBox>
+                    </placeholder>
+                </TableView>
             </VBox>
         </GridPane>
     </VBox>

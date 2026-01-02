@@ -5,9 +5,13 @@ import com.jejekatering.jstok.model.Bahan;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 public class BahanController {
 
@@ -17,6 +21,7 @@ public class BahanController {
     @FXML private TableColumn<Bahan, String> colSatuan;
     @FXML private TableColumn<Bahan, Integer> colStok;
     @FXML private TableColumn<Bahan, Integer> colMinStok;
+    @FXML private TableColumn<Bahan, Void> colStatus;
 
     @FXML private TextField txtSearch;
     @FXML private TextField txtNama;
@@ -48,6 +53,32 @@ public class BahanController {
         colSatuan.setCellValueFactory(new PropertyValueFactory<>("satuan"));
         colStok.setCellValueFactory(new PropertyValueFactory<>("stokSaatIni"));
         colMinStok.setCellValueFactory(new PropertyValueFactory<>("stokMinimum"));
+
+        if (colStatus != null) {
+            colStatus.setCellFactory(param -> new TableCell<>() {
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                        setGraphic(null);
+                    } else {
+                        Bahan bahan = getTableRow().getItem();
+                        HBox statusBox = new HBox();
+                        statusBox.setAlignment(Pos.CENTER);
+
+                        Circle dot = new Circle(6);
+                        dot.setFill(Color.web(bahan.getStatusColor()));
+
+                        // Add tooltip for status label
+                        Tooltip tooltip = new Tooltip(bahan.getStatusLabel());
+                        Tooltip.install(dot, tooltip);
+
+                        statusBox.getChildren().add(dot);
+                        setGraphic(statusBox);
+                    }
+                }
+            });
+        }
     }
 
     private void setupSatuanOptions() {
