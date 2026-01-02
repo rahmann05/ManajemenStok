@@ -16,7 +16,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -40,12 +41,14 @@ public class DashboardController {
     @FXML private VBox chartSection, restockSection, fastMovingSection;
     @FXML private HBox statusIndicatorSection;
 
+    @FXML private CategoryAxis xAxis;
+
     @FXML private Label lblStokKritisValue, lblDeadStockValue, lblTransaksiHariIniValue, lblTotalSKUValue;
     @FXML private Label lblStokKritisDesc, lblDeadStockDesc, lblTransaksiHariIniDesc, lblTotalSKUDesc;
 
     @FXML private Label lblStokNormal, lblStokRendah, lblStokHabis;
 
-    @FXML private BarChart<String, Number> barChart;
+    @FXML private LineChart<String, Number> lineChart;
     @FXML private TableView<Bahan> tblRestock;
     @FXML private TableColumn<Bahan, String> colNamaBahan, colSatuan;
     @FXML private TableColumn<Bahan, Integer> colSisaStok, colMinStok;
@@ -154,11 +157,23 @@ public class DashboardController {
         if (lblStokHabis != null) lblStokHabis.setText(String.valueOf(stokHabis));
     }
 
-    private void loadChartData() {
-        barChart.getData().clear();
-        XYChart.Series<String, Number> seriesMasuk = dashboardDAO.getChartDataMasukFrequency();
-        XYChart.Series<String, Number> seriesKeluar = dashboardDAO.getChartDataKeluarFrequency();
-        barChart.getData().addAll(seriesMasuk, seriesKeluar);
+private void loadChartData() {
+        lineChart.getData().clear();
+
+        if (xAxis != null) {
+            java.util.List<String> weekLabels = dashboardDAO.getWeekLabels();
+            xAxis.setCategories(FXCollections.observableArrayList(weekLabels));
+            xAxis.setAutoRanging(false);
+        }
+
+        List<XYChart.Series<String, Number>> allSeries = dashboardDAO.getAllStockMovementSeries();
+
+        for (XYChart.Series<String, Number> series : allSeries) {
+            lineChart.getData().add(series);
+        }
+
+        lineChart.setCreateSymbols(true);
+        lineChart.setAnimated(false);
     }
 
     private void loadRestockData() {
