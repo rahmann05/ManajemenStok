@@ -82,12 +82,14 @@ public class LaporanController {
         }
 
         try {
-            // Penamaan file dinamis berdasarkan rentang tanggal
             String tglStr = (dpDari.getValue() != null) ? dpDari.getValue() + "_sd_" + dpSampai.getValue() : "Semua_Waktu";
             String fileName = "Laporan_Stok_" + tglStr + ".csv";
 
-            // Simpan ke folder Downloads user
-            File file = new File(System.getProperty("user.home") + "/Downloads/" + fileName);
+            File folder = new File("D:/EksporCsv");
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+            File file = new File(folder, fileName);
 
             PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8);
             // Header CSV (Dapat dibuka di Excel)
@@ -100,7 +102,7 @@ public class LaporanController {
                 ));
             }
             pw.close();
-            showAlert("Export Berhasil", "File disimpan di folder Downloads:\n" + fileName);
+            showAlert("Export Berhasil", "File disimpan di D:/EksporCsv:\n" + fileName);
         } catch (Exception e) {
             e.printStackTrace();
             showAlert("Error", "Gagal export: " + e.getMessage());
