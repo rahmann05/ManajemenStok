@@ -30,15 +30,15 @@
             <HBox spacing="12" alignment="CENTER_LEFT">
                 <Label text="Filter" styleClass="section-title"/>
                 <Region HBox.hgrow="ALWAYS"/>
-                <DatePicker promptText="Dari tanggal" styleClass="form-date" prefWidth="140"/>
-                <DatePicker promptText="Sampai" styleClass="form-date" prefWidth="140"/>
-                <ComboBox promptText="Jenis" styleClass="form-combo" prefWidth="120"/>
-                <Button styleClass="button-secondary" text="Terapkan">
+                <DatePicker fx:id="dpDari" promptText="Dari tanggal" styleClass="form-date" prefWidth="140"/>
+                <DatePicker fx:id="dpSampai" promptText="Sampai" styleClass="form-date" prefWidth="140"/>
+                <ComboBox fx:id="comboJenis" promptText="Jenis" styleClass="form-combo" prefWidth="120"/>
+                <Button onAction="#handleFilter" styleClass="button-secondary" text="Terapkan">
                     <graphic>
                         <FontIcon iconLiteral="fth-filter" iconSize="14"/>
                     </graphic>
                 </Button>
-                <Button styleClass="button-primary" text="Export">
+                <Button onAction="#handleExport" styleClass="button-primary" text="Export">
                     <graphic>
                         <FontIcon iconLiteral="fth-download" iconColor="white" iconSize="14"/>
                     </graphic>
@@ -52,21 +52,21 @@
                     <FontIcon iconLiteral="fth-arrow-up-circle" iconColor="#22C55E" iconSize="16"/>
                     <Label text="Total Masuk" styleClass="stat-label-mini"/>
                 </HBox>
-                <Label text="150 Item" styleClass="stat-value-mini" style="-fx-text-fill: #22C55E;"/>
+                <Label fx:id="lblTotalMasuk" text="0 Item" styleClass="stat-value-mini" style="-fx-text-fill: #22C55E;"/>
             </VBox>
             <VBox styleClass="stat-card-mini" spacing="4" HBox.hgrow="ALWAYS">
                 <HBox alignment="CENTER_LEFT" spacing="8">
                     <FontIcon iconLiteral="fth-arrow-down-circle" iconColor="#EF4444" iconSize="16"/>
                     <Label text="Total Keluar" styleClass="stat-label-mini"/>
                 </HBox>
-                <Label text="89 Item" styleClass="stat-value-mini" style="-fx-text-fill: #EF4444;"/>
+                <Label fx:id="lblTotalKeluar" text="0 Item" styleClass="stat-value-mini" style="-fx-text-fill: #EF4444;"/>
             </VBox>
             <VBox styleClass="stat-card-mini" spacing="4" HBox.hgrow="ALWAYS">
                 <HBox alignment="CENTER_LEFT" spacing="8">
                     <FontIcon iconLiteral="fth-activity" iconColor="#8B5CF6" iconSize="16"/>
                     <Label text="Transaksi" styleClass="stat-label-mini"/>
                 </HBox>
-                <Label text="45" styleClass="stat-value-mini" style="-fx-text-fill: #8B5CF6;"/>
+                <Label fx:id="lblTotalTransaksi" text="0" styleClass="stat-value-mini" style="-fx-text-fill: #8B5CF6;"/>
             </VBox>
         </HBox>
 
@@ -90,4 +90,3 @@
         </VBox>
     </VBox>
 </ScrollPane>
-

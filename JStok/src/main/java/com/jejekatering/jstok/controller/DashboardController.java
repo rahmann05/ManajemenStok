@@ -6,6 +6,8 @@ import atlantafx.base.theme.CupertinoDark;
 import atlantafx.base.theme.CupertinoLight;
 import com.jejekatering.jstok.dao.DashboardDAO;
 import com.jejekatering.jstok.model.Bahan;
+import com.jejekatering.jstok.model.Pengguna;
+import com.jejekatering.jstok.util.SessionManager;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -77,6 +79,17 @@ public class DashboardController {
         loadDashboardData();
         runAnimations();
         setActiveButton(btnDashboard);
+        applyRoleRestrictions();
+    }
+
+    private void applyRoleRestrictions() {
+        Pengguna currentUser = SessionManager.getCurrentUser();
+        if (currentUser != null && "pegawai".equalsIgnoreCase(currentUser.getRole())) {
+            if (chartSection != null) {
+                chartSection.setVisible(false);
+                chartSection.setManaged(false);
+            }
+        }
     }
 
     private void runAnimations() {

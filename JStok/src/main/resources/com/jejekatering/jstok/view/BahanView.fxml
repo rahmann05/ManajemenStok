@@ -58,7 +58,7 @@
                 </TableView>
             </VBox>
 
-            <VBox styleClass="spatial-card" GridPane.columnIndex="1" spacing="20">
+            <VBox fx:id="detailBahanCard" styleClass="spatial-card" GridPane.columnIndex="1" spacing="20">
                 <VBox spacing="4">
                     <Label text="Detail Bahan" styleClass="section-title"/>
                     <Label text="Tambah atau edit data bahan" styleClass="text-secondary" style="-fx-font-size: 12px;"/>
