@@ -2,6 +2,8 @@ package com.jejekatering.jstok.controller;
 
 import com.jejekatering.jstok.dao.BahanDAO;
 import com.jejekatering.jstok.model.Bahan;
+import com.jejekatering.jstok.model.Pengguna;
+import com.jejekatering.jstok.util.SessionManager;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
@@ -10,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -32,6 +35,7 @@ public class BahanController {
     @FXML private Button btnSimpan;
     @FXML private Button btnHapus;
     @FXML private Button btnReset;
+    @FXML private VBox detailBahanCard;
 
     private BahanDAO bahanDAO;
     private Bahan selectedBahan;
@@ -45,6 +49,17 @@ public class BahanController {
         loadData();
         setupFormSelection();
         setupSearch();
+        applyRoleRestrictions();
+    }
+
+    private void applyRoleRestrictions() {
+        Pengguna currentUser = SessionManager.getCurrentUser();
+        if (currentUser != null && "pegawai".equalsIgnoreCase(currentUser.getRole())) {
+            if (detailBahanCard != null) {
+                detailBahanCard.setVisible(false);
+                detailBahanCard.setManaged(false);
+            }
+        }
     }
 
     private void setupTable() {
