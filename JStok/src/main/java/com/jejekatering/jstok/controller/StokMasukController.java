@@ -99,7 +99,6 @@ public class StokMasukController {
             if (success) {
                 txtJumlah.clear();
                 txtKeterangan.clear();
-                comboBahan.setValue(null);
                 refreshData();
                 new Alert(Alert.AlertType.INFORMATION, "Stok berhasil masuk!").show();
             }

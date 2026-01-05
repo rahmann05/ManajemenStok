@@ -75,66 +75,11 @@ public class StokDAO {
         }
     }
 
-    // ==========================================
-    // BAGIAN 2: RINGKASAN DATA (UNTUK DASHBOARD)
-    // ==========================================
-
     public Map<String, String> getRingkasanHariIni() {
-        return getRingkasanBerdasarkanJenis("Masuk");
-    }
-
-    public Map<String, String> getRingkasanKeluarHariIni() {
-        return getRingkasanBerdasarkanJenis("Keluar");
-    }
-
-    private Map<String, String> getRingkasanBerdasarkanJenis(String jenis) {
         Map<String, String> stats = new HashMap<>();
-        String queryTransaksi = "SELECT COUNT(*) as total FROM transaksi_stok WHERE jenis_transaksi = ? AND DATE(tanggal) = CURDATE()";
-        String queryTerakhir = "SELECT b.nama_bahan, t.jumlah, b.satuan FROM transaksi_stok t JOIN bahan b ON t.id_bahan = b.id_bahan WHERE t.jenis_transaksi = ? AND DATE(t.tanggal) = CURDATE() ORDER BY t.tanggal DESC LIMIT 1";
-        String queryPenginput = "SELECT COALESCE(p.username, 'Unknown') as username FROM transaksi_stok t LEFT JOIN pengguna p ON t.id_pengguna = p.id_pengguna WHERE t.jenis_transaksi = ? AND DATE(t.tanggal) = CURDATE() ORDER BY t.tanggal DESC LIMIT 1";
-
-        try (Connection conn = KonekDB.getConnection()) {
-            try (PreparedStatement ps = conn.prepareStatement(queryTransaksi)) {
-                ps.setString(1, jenis);
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) stats.put("total_transaksi", String.valueOf(rs.getInt("total")));
-            }
-            try (PreparedStatement ps = conn.prepareStatement(queryTerakhir)) {
-                ps.setString(1, jenis);
-                ResultSet rs = ps.executeQuery();
-                String key = jenis.equals("Masuk") ? "terakhir_masuk" : "terakhir_keluar";
-                if (rs.next()) stats.put(key, rs.getString("nama_bahan") + " (" + rs.getInt("jumlah") + " " + rs.getString("satuan") + ")");
-                else stats.put(key, "-");
-            }
-            try (PreparedStatement ps = conn.prepareStatement(queryPenginput)) {
-                ps.setString(1, jenis);
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) stats.put("penginput", rs.getString("username"));
-                else stats.put("penginput", "-");
-            }
-        } catch (SQLException e) { e.printStackTrace(); }
-        return stats;
-    }
-
-    // ==========================================
-    // BAGIAN 3: LAPORAN (FILTERED DATA)
-    // ==========================================
-
-    public ObservableList<LaporanController.LaporanItem> getLaporanFiltered(LocalDate dari, LocalDate sampai, String jenis) {
-        ObservableList<LaporanController.LaporanItem> list = FXCollections.observableArrayList();
-        StringBuilder query = new StringBuilder("""
-            SELECT t.tanggal, t.jenis_transaksi, b.nama_bahan, t.jumlah, b.satuan, p.username, t.keterangan 
-            FROM transaksi_stok t 
-            JOIN bahan b ON t.id_bahan = b.id_bahan 
-            JOIN pengguna p ON t.id_pengguna = p.id_pengguna 
-            WHERE 1=1
-        """);
-
-        if (dari != null) query.append(" AND DATE(t.tanggal) >= '").append(dari).append("'");
-        if (sampai != null) query.append(" AND DATE(t.tanggal) <= '").append(sampai).append("'");
-        if (jenis != null && !jenis.equals("Semua")) query.append(" AND t.jenis_transaksi = '").append(jenis).append("'");
-
-        query.append(" ORDER BY t.tanggal DESC");
+        
+        String query = "SELECT SUM(jumlah) as total_item, COUNT(DISTINCT id_bahan) as total_jenis, MAX(tanggal) as jam_terakhir " +
+                "FROM transaksi_stok WHERE jenis_transaksi = 'Masuk' AND DATE(tanggal) = CURDATE()";
 
         try (Connection conn = KonekDB.getConnection();
              Statement stmt = conn.createStatement();
