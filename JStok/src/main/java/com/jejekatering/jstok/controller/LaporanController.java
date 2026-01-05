@@ -25,7 +25,6 @@ public class LaporanController {
 
     @FXML
     public void initialize() {
-        // 1. Mapping Kolom ke Model
         colTanggal.setCellValueFactory(d -> d.getValue().tanggalProperty());
         colJenis.setCellValueFactory(d -> d.getValue().jenisProperty());
         colNama.setCellValueFactory(d -> d.getValue().namaProperty());
@@ -33,11 +32,9 @@ public class LaporanController {
         colUser.setCellValueFactory(d -> d.getValue().userProperty());
         colKeterangan.setCellValueFactory(d -> d.getValue().keteranganProperty());
 
-        // 2. Inisialisasi ComboBox
         comboJenis.setItems(FXCollections.observableArrayList("Semua", "Masuk", "Keluar"));
         comboJenis.setValue("Semua");
 
-        // 3. Load Data Awal (Tampilkan semua)
         loadData();
     }
 
@@ -92,13 +89,17 @@ public class LaporanController {
             File file = new File(folder, fileName);
 
             PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8);
-            // Header CSV (Dapat dibuka di Excel)
-            pw.println("Tanggal,Jenis,Nama Bahan,Jumlah,User,Keterangan");
+            pw.print('\ufeff');
+            pw.println("Tanggal;Jenis;Nama Bahan;Jumlah;User;Keterangan");
 
             for (LaporanItem item : laporanTable.getItems()) {
-                pw.println(String.format("%s,%s,%s,%s,%s,%s",
-                        item.getTanggal(), item.getJenis(), item.getNama(),
-                        item.getJumlah(), item.getUser(), item.getKeterangan()
+                pw.println(String.format("\"%s\";\"%s\";\"%s\";\"%s\";\"%s\";\"%s\"",
+                        escapeCSV(item.getTanggal()),
+                        escapeCSV(item.getJenis()),
+                        escapeCSV(item.getNama()),
+                        escapeCSV(item.getJumlah()),
+                        escapeCSV(item.getUser()),
+                        escapeCSV(item.getKeterangan())
                 ));
             }
             pw.close();
@@ -107,6 +108,11 @@ public class LaporanController {
             e.printStackTrace();
             showAlert("Error", "Gagal export: " + e.getMessage());
         }
+    }
+
+    private String escapeCSV(String value) {
+        if (value == null) return "";
+        return value.replace("\"", "\"\"");
     }
 
     private void showAlert(String title, String msg) {
